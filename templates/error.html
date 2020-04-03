@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    errorpage
+{% endblock %}
+
+{% block nav_home_active %}active{% endblock %}
+
+{% block content %}
+    {{ message }}&nbsp;&nbsp;<a href="{{ redirect_to }}">BACK</a>
+{% endblock %}
+    

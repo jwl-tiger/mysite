@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{# 页面标题 #}
+{% block title %}奔跑的程序员{% endblock %}
+
+{% block "nav_blog_active" %}active{% endblock %}
+
+{% load staticfiles %}
+{% load comments_tag %}
+{% block header_extends %}
+	<link rel="stylesheet" href="{% static 'blog/blog.css' %}">
+{% endblock %}
+
+{# 页面内容 #}
+{% block content %}
+	<!-- <div class="on-the-container"></div> -->
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+				{% for blog in page_of_blogs %}
+					<section id="posts">
+						<article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+							<div class="post-badge">
+								<span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+									<a href="">随便说些什么</a></span>
+							</div>
+							<header class="post-header">
+								<h1 class="post-title" itemprop="name headline"><a class="post-title-link" href="{% url 'blog_detail' blog.pk %}">{{ blog.title }}</a></h1>
+								<div class="post-meta">
+									<span><i class="iconfont icon-time"></i>  <span class="glyphicon glyphicon-time" aria-hidden="true"></span>{{blog.create_time|date:"Y-m-d"}}</span>
+									<span><i class="iconfont icon-eye"></i> 浏览&nbsp;{{ blog.get_read_num }}</span>
+									<span itemprop="interactionCount"><a itemprop="discussionUrl" href="https://www.ohyhello.com/archives/1781.html#comments"><i class="iconfont icon-Comments"></i> 评论数&nbsp;{% get_comment_count blog %}</a></span>
+								</div>
+							</header>
+							<img src="" alt="">
+								<div class="post-content" itemprop="articleBody">
+									<p>{{ blog.content|striptags|truncatechars:150}}</p>
+										<div text-center="" class="post-button">
+											<a href="{% url 'blog_detail' blog.pk %}">-   阅读全文   -	</a>
+										</div>
+		            			</div>
+						</article>
+					</section>
+				{% empty %}
+					<h3>--暂无博客--</h3>
+				{% endfor %}
+					<div class='paginator'>
+	                    <ul class="pagination">
+	                        {# 前一页 #}
+	                        <li>
+	                            {% if page_of_blogs.has_previous %}
+	                                <a href="?page={{ page_of_blogs.previous_page_number }}" aria-label="Previous">
+	                                    <span aria-hidden="true">&laquo;</span>
+	                                </a>
+	                            {% else %}
+	                                <span aria-hidden="true">&laquo;</span>
+	                            {% endif %}
+	                        </li>
+	                        
+	                        {# 遍历出全部页码 #}
+	                        {% for page_num in page_range %}
+	                            {% if page_num == page_of_blogs.number %}
+	                                <li class = 'active'><span>{{ page_num }}</span></li>
+	                            {% else %}
+	                                {%  if page_num == '...' %}
+	                                    <li><span>{{ page_num }}</span></li>
+	                                {% else %}
+	                                    <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+	                                {% endif %}
+	                            {% endif %}
+	                        {% endfor %}
+	                        
+	                        {# 下一页 #}
+	                        <li>
+	                            {% if page_of_blogs.has_next %}
+	                                <a href="?page={{ page_of_blogs.next_page_number }}" aria-label="Next">
+	                                    <span aria-hidden="true">&raquo;</span>
+	                                 </a>
+	                            {% else %}
+	                                <span aria-hidden="true">&raquo;</span>
+	                            {% endif %}
+	                        </li>
+	                    </ul>
+	                    <p>
+	                        共有{{page_of_blogs.paginator.count}}篇博客;当前第{{ page_of_blogs.number }}页，
+	                        共{{ page_of_blogs.paginator.num_pages }}页
+	                    </p>
+	                </div>
+            </div>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<div id="kratos-widget-area" >
+				    <div id="sidebar" class="affix">
+				        <div id="kratos_about" class="widget widget_kratos_about clearfix">        
+					    	<div class="photo-background">
+					            <div class="photo-background" style="background:url({% static 'images/p2.jpg' %})"></div>
+					        </div>
+					        <div class="photo-wrapper clearfix">
+						        <div class="photo-wrapper-tip text-center">
+						            <a href="" rel="nofollow"><img class="about-photo" src="{% static 'images/p0.jpg' %}" alt=""></a>
+						        </div>
+					        </div>
+					        <div class="textwidget">
+					            <p class="text-center"><span style="font-size: 10pt;">关于站点 <a href="">[关于]</a></span></p>
+					        </div>
+					    </div>
+
+					    <div id="kratos_comments" class="widget widget_kratos_comments clearfix">
+					    	<h4 class="widget-title">最近评论</h4>
+					    	<div class="recentcomments">
+					    		{% for comment in hot_comments %}
+					    		<li class="comment-listitem">
+					    			<div class="comment-user">
+					    				<span class="comment-avatar">
+					    					<img alt="" src="{% static 'images/p10.jpg' %}" class="avatar avatar-50 photo" height="50" width="50">
+					    				</span>
+				    				<div class="comment-author" title="chz">chz</div>
+					    				<span class="comment-date">20 小时前 (03月26日)</span>
+					    			</div>
+					    			<div class="comment-content-link">
+				    					<a href="">
+				    						<div class="comment-content">
+				    							{{ comment.id }}{{ comment.text|striptags|safe }}
+				    						</div>
+				    					</a>	
+					    			</div>
+					    		</li>
+					    		{% empty %}
+									暂无评论QAQ
+		    					{% endfor %}
+				    		</div>
+					    </div>
+						
+				        <div class="widget widget_kratos_poststab">
+					        <ul id="tabul" class="nav nav-tabs nav-justified visible-lg">
+					            <li class="active"><span href="#newest" data-toggle="tab">分类文章</span></li>
+					            <li><span href="#hot" data-toggle="tab">热点文章</span></li>
+					            <li><span href="#rand" data-toggle="tab">推荐文章</span></li>
+					        </ul>
+					        <div class="tab-content">
+					            <div class="tab-pane fade in active" id="newest">
+					                <ul class="list-group">
+					                	{% for types in blogtypes_for_onepage %}
+				                        	<a class="list-group-item visible-lg"  href="{% url 'home_to_coder_types' types.pk  %}" rel="bookmark"><img src="{% static 'images/book.jpg' %}" alt=""> {{ types.type_name }} {{ types.blogtype_count }}</a>
+			                        	{% empty %}
+											暂无分类
+										{% endfor %}
+			                        </ul>                      
+					            </div>
+					            <div class="tab-pane fade" id="hot">
+					                <ul class="list-group">
+					                	{% for hot_blog in hot_blogs_for_7_days %}
+					                    	<a class="list-group-item visible-lg"  href="{% url 'blog_detail' hot_blog.id  %}" rel="bookmark"><i class="fa  fa-book"><span class="glyphicon glyphicon glyphicon-plane" aria-hidden="true"></span></i>{{ hot_blog.title|safe }}&nbsp;{{ hot_blog.read_num_sum|safe }}</a>
+					                	{% empty %}
+					                		NO HOT BLOGS.
+				                		{% endfor %}
+					                </ul>
+					            </div>
+					            <div class="tab-pane fade" id="rand">
+					                <ul class="list-group">
+					                	{% for types in blogtypes_for_onepage %}
+					                		<a class="list-group-item visible-lg" title="Win10 开始菜单自动重置问题" href="" rel="bookmark"><i class="fa  fa-book"></i> {{ types.type_name }} </a> 
+										{% empty %}
+											暂无分类
+										{% endfor %}
+			                        </ul>                       
+					            </div>
+					        </div>
+				    	</div>                
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>	
+			
+{% endblock %}
+

@@ -1,0 +1,190 @@
+
+body{ 
+    overflow-x:hidden!important;  
+    background-color: #f5f7f9!important;
+}
+#head{
+    border: 1px;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 3;
+    background:rgba(255,255,255,.1);
+    -webkit-transition: all .6s;
+    -o-transition: all .6s;
+    transition: all .6s
+}
+#head:hover {
+    background: rgba(255,255,255,.8)!important;
+    -webkit-box-shadow: 0 0 2px 2px rgba(172,172,172,.4)!important;
+    box-shadow: 0 0 2px 2px rgba(172,172,172,.4)!important
+}
+a.navbar-brand {
+    margin-top: 10px;
+    margin-left: 30px!important;
+    color: #344449!important;
+    font-size: 19px;
+    font-weight: 700;
+    text-align: center;
+    font-family: "Segoe UI","Helvetica Neue","Helvetica",Arial,sans-serif;
+}
+.menu li {
+    margin-top: 10px!important;
+    border: 0;
+    display: inline-block;
+    height: 60px;
+    line-height: 50px;
+    text-align: left;
+    margin: 0 20px 0 0
+}
+.menu li a{
+     display: block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 12px;
+    line-height: inherit;
+    -webkit-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: .2s;
+    -o-transition-duration: .2s;
+    transition-duration: .2s;
+    -webkit-transition-timing-function: ease-in-out;
+    -o-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    -webkit-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    transition-delay: 0s;
+    color: #000!important;
+    font-size: 16px;
+    border-bottom: none
+}
+.menu li a:hover{
+    text-shadow: 1px 1px 1px #000
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    margin: 0;    
+    background:#eef0f2!important;
+}
+
+.header-wrap {
+    width: 100%;
+    height: 570px;
+    padding: 0;
+    -webkit-box-shadow: initial;
+    box-shadow: initial;
+    border-radius: initial
+}
+
+@media (max-width: 991px) {
+    .menu .menu-item a {
+        text-align:center;
+        padding: 0
+    }
+
+    .menu .menu-item.search {
+        display: none
+    }
+
+    .header-wrap {
+        width: auto!important;
+        height: 200px
+    }
+}
+
+.site-config {
+    height: 560px;
+    width: 100%;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    -webkit-animation: fade-in-bottom 1s .3s backwards;
+    animation: fade-in-bottom 1s .3s backwards;
+    background-attachment: fixed
+}
+.title{
+    display: inline-block;
+    margin:0 auto ;
+    text-align: center;
+    top:30%;position:absolute;width:100%;margin-top:-50px;z-index:2;color:#fff;text-shadow:2px 2px 2px #666
+}
+#typed {
+    font-size: 38px;
+    font-weight: 600;
+    color: #000
+}
+
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -999!important;
+    width: 100%;
+    height: 100%;
+    pointer-events: none
+    }
+
+/*bottom*/
+#footer{padding:40px 0 30px}
+#footer p{color:rgba(40,42,44,.6);letter-spacing:1px;font-size:14px;text-transform:uppercase}
+#footer p a{color:black}
+#footer .govimg{display:inline-block;margin-top:-4px;margin-right:6px;width:14px;height:1pc;background:url(../images/icon-police.png) 0 0 no-repeat;vertical-align:middle}
+@media(min-width:992px){#footer .col-md-offset-3{margin-left:10%}#footer .col-md-6{width:80%}}
+.kratos-social-icons>a{padding:4px 14px;color:#51aded}
+.kratos-social-icons>a i{font-size:30px}
+.kratos-social-icons>a:active,.kratos-social-icons>a:focus,.kratos-social-icons>a:hover{text-decoration:none;color:#5a5a5a}
+
+
+/*home.html*/
+.hotdatas{
+    margin-top: 20px;
+}
+.Highcharts{
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+/*搜索框*/
+.search-box {
+    margin-right: 30px!important;
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    background: #eef0f2;
+    height: 55px!important;
+    border-radius: 40px;
+    padding: 10px;
+            }
+.search-btn {
+    color: #e84118!important;
+    float: right;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #eef0f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+    text-decoration: none!important;
+}
+.search-txt {
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: black;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0;
+}
+.search-box:hover > .search-txt {
+    width: 240px;
+    padding: 0 6px;
+}
+.search-box:hover > .search-btn {
+    background: white;
+}

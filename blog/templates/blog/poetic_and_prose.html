@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load comments_tag %}
+
+
+{# 页面标题 #}
+{% block title %}诗文{% endblock %}
+
+{% block "poetic_active" %}active{% endblock %}
+
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                {% for blog in page_of_blogs %}
+                    <section id="posts">
+                        <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+                            <div class="post-badge">
+                                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                                    <a href="">随便说些什么</a></span>
+                            </div>
+                            <header class="post-header">
+                                <h1 class="post-title" itemprop="name headline"><a class="post-title-link" href="{% url 'blog_detail' blog.pk %}">{{ blog.title }}</a></h1>
+                                <div class="post-meta">
+                                    <span><i class="iconfont icon-time"></i>  <span class="glyphicon glyphicon-time" aria-hidden="true"></span>{{blog.create_time|date:"Y-m-d"}}</span>
+                                    <span><i class="iconfont icon-eye"></i> 浏览&nbsp;{{ blog.get_read_num }}</span>
+                                    <span ><a href=""><i class="iconfont icon-Comments"></i> 评论数&nbsp;{% get_comment_count blog %}</a></span>
+                                </div>
+                            </header>
+                            <img src="" alt="">
+                                <div class="post-content" itemprop="articleBody">
+                                    <p>{{ blog.content|striptags|truncatechars:150}}</p>
+                                        <div text-center="" class="post-button">
+                                            <a href="{% url 'blog_detail' blog.pk %}">-   阅读全文   -  </a>
+                                        </div>
+                                </div>
+                        </article>
+                    </section>
+                {% empty %}
+                    <h3>--暂无博客--</h3>
+                {% endfor %}
+                    <div class='paginator'>
+                        <ul class="pagination">
+                            {# 前一页 #}
+                            <li>
+                                {% if page_of_blogs.has_previous %}
+                                    <a href="?page={{ page_of_blogs.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                {% else %}
+                                    <span aria-hidden="true">&laquo;</span>
+                                {% endif %}
+                            </li>
+                            
+                            {# 遍历出全部页码 #}
+                            {% for page_num in page_range %}
+                                {% if page_num == page_of_blogs.number %}
+                                    <li class = 'active'><span>{{ page_num }}</span></li>
+                                {% else %}
+                                    {%  if page_num == '...' %}
+                                        <li><span>{{ page_num }}</span></li>
+                                    {% else %}
+                                        <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {# 下一页 #}
+                            <li>
+                                {% if page_of_blogs.has_next %}
+                                    <a href="?page={{ page_of_blogs.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                     </a>
+                                {% else %}
+                                    <span aria-hidden="true">&raquo;</span>
+                                {% endif %}
+                            </li>
+                        </ul>
+                        <p>
+                            共有{{page_of_blogs.paginator.count}}篇博客;当前第{{ page_of_blogs.number }}页，
+                            共{{ page_of_blogs.paginator.num_pages }}页
+                        </p>
+                    </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <aside id="sidebar" class="sidebar">
+                    <div class="sidebar-inner">
+                        <div class="sider-item">
+                            <ul class="sidebar-nav" text-center="">
+                                <li class="sidebar-nav-overview sidebar-nav-active">站点概览</li>
+                            </ul>
+                            <section class="site-overview-wrap sidebar-section-active" text-center="">            
+                                <div class="site-author">
+                                    <ul>
+                                        <li><img src="{% static 'images/p3.jpg' %}" alt="author" style="height: 150px;width: 150px;text-align: center;">
+                                    </li>
+                                    </ul>
+                                    
+                                </div>
+                                <div class="author-social">
+                                    <ul class="author-social-links">
+                                        <li>填写github，qq等</li>
+                                    </ul>
+                                </div>
+                                <div class="site-status">
+                                    <ul>
+                                        <li>
+                                            <a href="">
+                                                <span class="site-state-item-count">49</span>
+                                                <span class="site-state-item-name">近日分享</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="">
+                                                <span class="site-state-item-count">9</span>
+                                                <span class="site-state-item-name">我的推荐</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="sider-item ">
+                            <section>
+                                <ul class="sidebar-nav" text-center="">
+                                    <li class="sidebar-nav-random sidebar-nav-active" >相关文章</li>
+                                </ul>
+                            </section>
+                            
+                            <section class=" sidebar-section-active">    
+                                <ul class="rand-archive-list">
+                                    <li style="list-style-type: disc;"><a href="" title="我们结束了75天的恋爱（未完继续）">我们结束了75天的恋爱（未完继续）</a></li>
+                                    <li style="list-style-type: disc;"><a href="" title="我们结束了75天的恋爱（未完继续）">我们结束了75天的恋爱（未完继续）</a></li>
+                                </ul>                
+                            </section>
+                        </div>                                
+                    </div>
+                </aside>
+            </div>
+        </div>    
+    </div>    
+{% endblock %}
