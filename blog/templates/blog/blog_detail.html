@@ -8,38 +8,49 @@
     <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
     <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
     <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <style>
+        #background-canvas{
+            top: 400px
+        }
+    </style>
 {% endblock %}
 
 {# 页面内容 #}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+    <div class="header-wrap">
+        <div class="site-config" style="background-image:url({% static 'images/p5.jpg' %})">
+             <div class="title" style="margin:auto">
+                <span id="typed" style="white-space:pre;">疲惫的生活总要有点温柔的梦想~</span><span class="typed-cursor"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="under-header-warp container blog-detail">
+        <div class="columns">
+            <div class="site-left column is-8" >
                 <div class="blog-content-area">
                     <div class="blog-content-area-inner">
                         <h1 class="blog-title">{{ blog.title }}</h1>
-                        <div class="blog-meta">
-                            <span><i class="iconfont icon-time"></i>  <span class="glyphicon glyphicon-time" aria-hidden="true"></span>发表于&nbsp;{{blog.create_time|date:"Y-m-d"}}</span>
-                            <span><i class="iconfont icon-eye"></i> 浏览&nbsp;{{ blog.get_read_num }}</span>
-                            <span itemprop="interactionCount"><a itemprop="discussionUrl" href=""><i ></i> 评论数&nbsp;{% get_comment_count blog %}</a></span>
+                        <div class="blog-meta" style="margin-top: 10px;margin-bottom: 30px">
+                            <span><i class="fa fa-check-square" aria-hidden="true" style="margin-right: 5px"></i>发表于&nbsp;{{blog.create_time|date:"Y-m-d"}}</span>
+                            <span><i class="fa fa-eye" aria-hidden="true"></i> 浏览&nbsp;{{ blog.get_read_num }}</span>
+                            <span><a itemprop="discussionUrl" href=""><i class="fa fa-comments" aria-hidden="true"></i> 评论数&nbsp;{% get_comment_count blog %}</a></span>
                         </div>
                         <div class="blog-content">{{ blog.content|safe }}</div>
-                        <div class="blog-more">
-                            <p>上一篇：
-                                {% if previous_blog %}
-                                    <a href="{% url 'blog_detail' previous_blog.pk %}">{{ previous_blog.title }}</a>
-                                {% else %}
-                                    没有了
-                                {% endif %}
-                            </p>
-                            <p>下一篇：
-                                {% if next_blog %}
-                                    <a href="{% url 'blog_detail' next_blog.pk %}">{{ next_blog.title }}</a>
-                                {% else %}
-                                    没有了
-                                {% endif %}
-                            </p>
-                        </div>
+
+                        <footer class="post-footer">
+                            {% if previous_blog %}
+                                <div class="post-nav-prev post-nav-item"><i class="fa fa-angle-left"></i><a href="{% url 'blog_detail' previous_blog.pk %}">{{ previous_blog.title }}</a></div>
+                            {% else %}
+                                <div class="post-nav-prev post-nav-item"><i class="fa fa-angle-left" aria-hidden="true"></i><a href="#">没有了</a></div>
+                            {% endif %}
+                            {% if next_blog %}   
+                                <div class="post-nav-next post-nav-item"><a href="{% url 'blog_detail' next_blog.pk %}">{{ next_blog.title }}</a><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                            {% else %}
+                                <div class="post-nav-next post-nav-item"><a href="#">没有了</a><i class="fa fa-angle-right"></i></div>
+                            {% endif %}
+                        </footer>
+
                     </div>
                 </div>
                 <div class="comment-area">
@@ -56,7 +67,7 @@
                                 {{ field }}
                             {% endfor %}
                             <span id="comment_error" class="text-danger pull-left"></span>
-                            <input type="submit" value="评论" class="btn btn-primary pull-right">
+                            <input type="submit" value="评论" class="button is-info is-focused" style="float: right;">
                         </form>
                     {% else %}
                         您尚未登录，登录之后方可评论~ 
@@ -66,7 +77,7 @@
                     {% endif %}
                 </div>
                 <h3 class="comment-area-title">评论列表</h3>
-                <div id="comment_list">
+                <div id="comment_list" style="margin-top: 10px">
                     {% for comment in comments %}
                         <div id="root_{{ comment.pk }}" class="comment">
                             <div class="fathor">
@@ -79,7 +90,7 @@
                                         {{ comment.text|striptags|safe }}
                                     </div>
                                     <div class="fathor-meta" style="min-height: 10px;">
-                                         <span>{{ comment.comment_time|date:"Y-m-d H:i:s" }}</span>
+                                         <span><i class="fa fa-bolt" aria-hidden="true" style="padding-right: 5px"></i>{{ comment.comment_time|date:"Y-m-d H:i:s" }}</span>
                                         <a href="javascript:reply({{ comment.pk }});">回复</a>
                                     </div>
                                 </div>
@@ -98,7 +109,7 @@
                                             {{ reply.text|striptags|safe }}
                                         </div>
                                         <div class="reply-meta" style="min-height: 10px;">
-                                            <span>{{ reply.comment_time|date:"Y-m-d H:i:s" }}</span>
+                                            <span><i class="fa fa-bullseye" aria-hidden="true" style="padding-right: 5px"></i>{{ reply.comment_time|date:"Y-m-d H:i:s" }}</span>
                                             <a href="javascript:reply({{ reply.pk }});">回复</a>
                                         </div>
                                     </div>
@@ -110,7 +121,7 @@
                     {% endfor %}
                 </div>                    
             </div>
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="site-right column is-3 is-offset-1" style="padding-top: 0">
                 <aside id="sidebar" class="sidebar">
                     <div class="sidebar-inner">
                         <div class="sider-item">
@@ -120,7 +131,7 @@
                             <section class="site-overview-wrap sidebar-section-active" text-center="">            
                                 <div class="site-author">
                                     <ul>
-                                        <li><img src="{% static 'images/p3.jpg' %}" alt="author" style="height: 150px;width: 150px;text-align: center;">
+                                        <li><img src="{% static 'images/leim.jpg' %}" alt="author" style="height: 160px;width: 160px;text-align: center;border-radius: 5px">
                                     </li>
                                     </ul>
                                     
@@ -134,14 +145,14 @@
                                     <ul>
                                         <li>
                                             <a href="">
-                                                <span class="site-state-item-count">49</span>
-                                                <span class="site-state-item-name">近日分享</span>
+                                                <span class="item-count-one">49</span>
+                                                <span class="item-name-one">近日分享</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="">
-                                                <span class="site-state-item-count">9</span>
-                                                <span class="site-state-item-name">我的推荐</span>
+                                                <span class="item-count-two">9</span>
+                                                <span class="item-name-two">我的推荐</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -157,8 +168,9 @@
                             
                             <section class=" sidebar-section-active">    
                                 <ul class="rand-archive-list">
-                                    <li style="list-style-type: disc;"><a href="" title="我们结束了75天的恋爱（未完继续）">我们结束了75天的恋爱（未完继续）</a></li>
-                                    <li style="list-style-type: disc;"><a href="" title="我们结束了75天的恋爱（未完继续）">我们结束了75天的恋爱（未完继续）</a></li>
+                                    <li style=""><a href="">我们结束了77天的恋爱</a></li>
+
+                                    <li style=""><a href="">这个世界本就没有神明（未完待续）</a></li>
                                 </ul>                
                             </section>
                         </div>                                

@@ -66,17 +66,6 @@ def get_blog_list_common_data(request,blogs_for_onepage):
     context['blog_dates'] = blog_dates_dict #日期                                         
     return context
 
-def home_to_coder(request):
-    blogtypes_for_onepage = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))
-    hot_comments = list(Comment.objects.all().order_by('-id'))
-    hot_comments = hot_comments[:5]    
-    someblogs_show = Blog.objects.filter(blog_type=blogtypes_for_onepage[0])
-    context = get_blog_list_common_data(request,someblogs_show)
-    context['blogtypes_for_onepage'] = blogtypes_for_onepage
-    context['someblogs_show'] = someblogs_show
-    context['hot_comments'] = hot_comments
-    context['hot_blogs_for_7_days'] = get_seven_days_hot_blogs()
-    return render(request,'blog/home_to_coder.html',context)
 
 def home_to_coder_types(request,field_type_pk):
     blogtypes_for_onepage = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))

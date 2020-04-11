@@ -2,9 +2,11 @@
     margin: 0px;
     padding: 0px;
 }
-body{margin-top: 80px!important;}
 a{text-decoration:none!important}
 ul{list-style-type:none;}
+.under-header-warp{
+    margin-top: 60px
+}
 div.blog:not(:last-child){
     margin-bottom: 2em;
     padding-bottom: 1em;
@@ -19,7 +21,12 @@ div.blog p.blog-info{
 div.blog p.blog-time{
     margin-bottom: 0;
 }
-/*home_to_coder*/
+/*home_to_coder_fields*/
+nav.pagination{
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+}
 .post {
     padding: 40px;
     background: #fff!important;
@@ -62,7 +69,7 @@ div.blog p.blog-time{
 
 .post-badge {
     position: absolute;
-    top: 15px;
+    top: 75px;
     left: -14px;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
@@ -110,6 +117,7 @@ div.blog p.blog-time{
 
 .post-meta {
     font-size: 13px;
+    margin-top: 10px;
     margin-bottom: 10px
 }
 
@@ -180,7 +188,7 @@ div.on-the-container{
     position: relative!important;
 }
 @media(min-width:1200px){.affix,.affix-bottom{width:360px}}
-.widget{margin:0 0 15px;padding:20px 25px;background-color:#fff;box-shadow:0 2px 4px rgba(0,0,0,.1);border-radius:0}
+.widget{margin:0 0 15px;padding:20px 25px;background-color:#fff;box-shadow:0 2px 4px rgba(0,0,0,.1);border-radius:8px}
 .widget-title{position:relative;margin:0 0 10px;padding-bottom:12px;border-bottom:1px solid #e7e7e7;font-size:16px}
 .widget-title::after{position:absolute;left:0;bottom:0;height:2.5px!important;width:73px;background-color:#51aded;content:''}
 .widget img{max-width:100%;height:auto}
@@ -189,30 +197,12 @@ div.on-the-container{
 .widget .children{padding-left:30px}
 .widget_kratos_about{padding:0!important}
 .widget_kratos_about p{margin-bottom:1em;font-size:16px;margin:0}
-.widget_kratos_about .photo-wrapper{width:100%}
+.widget_kratos_about .photo-wrapper{width:100%;text-align: center;}
 .widget_kratos_about .photo-wrapper img{margin:-50px 0 0;width:90px;height:90px;border:rgba(255,255,255,.4) 4px solid;border-radius:50%}
 .widget_kratos_about .photo-background{height:120px}
-.widget_kratos_about .textwidget{margin:10px 0 30px}
+.widget_kratos_about .textwidget{margin:10px 10px 30px;text-align: center;padding-bottom: 10px}
 .widget_kratos_tags .widget-title::after{height:2px!important}
 .widget_kratos_tags .tag_clouds a{display:inline-block;margin:3px 4px;padding:4px 12px;border:1px solid #f0f0f0;color:#666;text-transform:uppercase;line-height:19px;background:rgba(251,251,251,.7)}
-.widget_kratos_poststab{padding:7px 30px 15px 30px}
-.widget_kratos_poststab .nav{padding-left:0;margin-bottom:0;list-style:none}
-.widget_kratos_poststab .nav-tabs>li{float:left}
-.widget_kratos_poststab .nav-tabs>li>span{position:relative;display:block;padding:10px 15px;line-height:1.42857143;border:1px solid transparent}
-.widget_kratos_poststab .nav-tabs>li>span:focus,.nav-tabs>li>a:hover,a.list-group-item:focus,a.list-group-item:hover,button.list-group-item:focus,button.list-group-item:hover{color:#000!important}
-.widget_kratos_poststab .nav-tabs.nav-justified>li>span{margin-right:0;border-bottom:0;border-radius:0}
-.widget_kratos_poststab .nav-tabs.nav-justified>.active>span,.nav-tabs.nav-justified>.active>span:focus,.nav-tabs.nav-justified>.active>span:hover{border:0}
-.widget_kratos_poststab #tabul li{border-bottom:3px solid #f2f2f2;list-style:none;width:33%;text-align:center;font-size:16px;cursor:url(../images/pointer.cur),auto}
-.widget_kratos_poststab #tabul .active{position:relative;border-bottom:3px solid #51aded;color:#000}
-.widget_kratos_poststab .tab-content{margin:0 8px 18px 8px}
-.widget_kratos_poststab .tab-content>.tab-pane{display:none}
-.widget_kratos_poststab .tab-content>.active{display:block}
-.widget_kratos_poststab .list-group{padding-left:0;margin:0!important}
-.widget_kratos_poststab .tab-content .list-group a{border-bottom:1px dashed #b4afaf;color:#666;text-decoration:none;text-overflow:ellipsis;white-space:nowrap;-webkit-transition:color .3s;transition:color .3s}
-.widget_kratos_poststab .tab-content .list-group a:hover{background-color: white}
-.widget_kratos_poststab .list-group-item{font-size:17px;position:relative;display:block;margin-bottom:0;;border:0;padding-left:2px;padding-bottom: 5px}
-.widget_kratos_poststab .list-group-item:first-child{margin-top:1px}
-.widget_kratos_poststab .list-group-item i{margin:0 5px 0 0}
 .widget_kratos_comments .recentcomments{padding:0 5px}
 .widget_kratos_comments .comment-listitem{list-style:none;padding:8px 0!important}
 .widget_kratos_comments .comment-user{font-size:13px}
@@ -229,90 +219,9 @@ div.on-the-container{
 .widget_links li{list-style:none;width:50%;float:left}
 .widget_links img{width:25px;height:25px;margin-top:-3px;border-radius:50%}
 
-/*诗文*/
-@media (max-width: 991px) {
-    #sidebar {
-        display: none
-    }
-}
-
-
-#sidebar {
-    width: 315px;
-    float: right;
-    position: static
-}
-/*设置div里的ul和li标签文本居中*/
-#sidebar div ul{
-    display: table;
-    margin: 0 auto;
-}
-#sidebar div ul li{
-    text-align: center;
-    margin-top: 20px;
-}
-/*设置完毕*/
-.site-status{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-.sider-item {
-    display: block!important;
-    margin-left: auto;
-    margin-right: auto;
-    -webkit-animation: fade-in-left .3s .3s backwards;
-    animation: fade-in-left .3s .3s backwards;
-    padding: 20px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    color: #555;
-    background: #fff;
-    border-radius: 5px;
-    z-index: 2;
-    margin-bottom: 10px
-}
-
-.rand-archive-nav-title {
-    margin: 0
-}
-
-.sidebar-inner.affix {
-    position: fixed;
-    top: 50px;
-    width: 315px
-}
-
-.sidebar section.sidebar-section-active {
-    display: block
-}
-
-.sidebar-nav {
-    display: block;
-    margin: 0 0 20px;
-    padding-left: 0
-}
-
-.sidebar-nav li {
-    display: inline-block;
-    cursor: pointer
-}
-
-.sidebar-nav li+li {
-    margin-left: 10px
-}
-
-.sidebar-nav .sidebar-nav-active {
-
-    color: #dc143c;
-    border-bottom: 1px solid #dc143c
-}
-.rand-archive-list{
-    margin-bottom: 20px!important;
-}
 /*blog_detail*/
 .blog-content-area{
-    background-color: #fff
+    background-color: #fff;
 }
 .blog-content-area-inner{
     padding: 2em;
@@ -327,6 +236,7 @@ div.on-the-container{
 .blog-title,.blog-meta{
     text-align: center!important;
 }
+
 .blog-meta {
     font-size: 13px;
     margin-bottom: 10px
@@ -351,6 +261,48 @@ div.on-the-container{
 .post-button a,.blog-meta a {
     border: none
 }
+.post-footer {
+    display: table;
+    margin-top: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-top: 1px solid #eee
+}
+.post-nav-item {
+    display: table-cell;
+    padding: 50px 0 0;
+    width: 45%;
+    vertical-align: top
+}
+.post-nav-item a{
+    color: #505160
+}
+.post-nav-item a:hover{
+    color: #000;
+}
+.post-nav-prev {
+    text-align: left;
+}
+.post-nav-prev i{
+    margin-right: 5px
+}
+.post-nav-next {
+    text-align: right;
+}
+.post-nav-next i{
+    margin-left: 5px
+}
+/*评论区*/
+label{
+    padding:10px 0 10px ;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+.blog-detail div,form{
+    border-radius: 6px
+}
 div.django-ckeditor-widget {
     width: 100%;
 }
@@ -367,6 +319,9 @@ div.comment-area {
 h3.comment-area-title {
     border-bottom: 1px solid #ccc;
     padding-bottom: 0.4em;
+}
+.site-left{
+    padding: 0
 }
 #comment-row{
     padding: 0px;
@@ -438,164 +393,97 @@ div.reply a {
 #comment_list{
     margin-bottom: 5em;
 }
-/*分割线*/
+/*sidebar*/
+@media (max-width: 991px) {
+    #sidebar {
+        display: none
+    }
+}
+/*设置div里的ul和li标签文本居中*/
+#sidebar div ul{
+    display: table;
+    margin: 0 auto;
+}
+#sidebar ul li{
+    margin-top: 10px;
+}
+/*设置完毕*/
+.site-status{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.item-count-two,.item-name-two{
+    color: #b27961
+}
+.item-count-one,.item-name-one{
+    color: #3273dc;
+}
+.sider-item {
+    display: block!important;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-animation: fade-in-left .3s .3s backwards;
+    animation: fade-in-left .3s .3s backwards;
+    padding: 20px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #555;
+    background: #fff;
+    border-radius: 5px;
+    z-index: 2;
+    margin-bottom: 10px
+}
 
-
-div,ol,form{
-border-radius: 5px;
-
-}
-ol a{
-    color: #555
-}
-.form-write{
-    background-color: white;
-    margin-bottom: 20px;
-}
-input::-ms-clear {
-    display: none;
-}
-input {outline:none!important;
-}
-textarea:focus{ outline:none!important; 
+.rand-archive-nav-title {
+    margin: 0
 }
 
-textarea {
-    box-shadow:none!important;
-    outline: none!important;
-    font-size: 16px!important;
-    border: 0px!important;
-    background-color: white;
-    resize: none;
-  }
-form button:hover {
-    font-weight: 600;
-    border-width: 2px;
+.sidebar-inner.affix {
+    top: 50px;
+    width: 315px
 }
-.submit{
+
+.sidebar section.sidebar-section-active {
+    display: block
+}
+
+.sidebar-nav {
+    display: block;
+    margin: 0 0 20px;
+    padding-left: 0
+}
+
+.sidebar-nav li {
+    display: inline-block;
+    cursor: pointer
+}
+
+.sidebar-nav li+li {
+    margin-left: 10px
+}
+
+.sidebar-nav .sidebar-nav-active {
+
+    color: #dc143c;
+    border-bottom: 1px solid #dc143c
+}
+.rand-archive-list{
+    margin-bottom: 20px!important;
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+.rand-archive-list a{
     font-size: 14px;
-    padding: 6px 20px;
-    border-radius: 20px;
-    background: 0 0;
-    border: 1px solid #5f5f5f;
-    color: #5f5f5f;
-    float: right;
-    margin-bottom: 18px;
-    margin-right: 32px;
-}
-
-#row-bottom{
-    padding: 0px;
-}
-ul.blog-info-description{
-    list-style-type:none;
-    margin-bottom: 2em;
-}
-ul.blog-info-description li{
-    display:inline-block;
-    margin-right: 1em;
-}
-div.blog-detail_content{
-    text-indent:2em;
-}
-div.blog-more{
-    margin-top:1em;
-}
-
-ol.comment-list {
-    flex-direction: column;
-    background-color: white;
-    padding: 0;
-    margin-bottom: 25px;
-}
-
-ol.comment-list li.comment-parent {
-    list-style: none
-}
-
-.comment-list a {
-    border: none
-}
-
-.comment-content a {
+    background-color: transparent;
+    color: #505160;
+    outline: 0;
     border-bottom: 1px solid #999
 }
 
-ol.comment-list p {
-    margin: 0;
-    word-break: break-all
-}
 
-ol.comment-list li {
-    list-style: none
-}
-
-ol.comment-list ol {
-    padding: 0
-}
-
-
-
-.comment-child {
-    border-top: 1px solid #eee
-}
-
-.comment-author .avatar {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin-right: 5px;
-    vertical-align: middle;
-    border-radius: 50%
-}
-
-.comment-author .fn {
-    font-style: normal;
-    font-size: 16px
-}
-
-.device-info {
-    float: right;
-    margin-right: 15px
-}
-
-.device-info span {
-    margin: 0 10px;
-    text-shadow: #40b3ec 1px 1px 6px
-}
-
-.comment-by-author::after,.device-info span:first-child {
-    text-shadow: #dc143c 1px 1px 6px
-}
-
-.comment-content {
-    margin: 20px 0;
-    color: #313131
-}
-.comment-meta{
-    margin-bottom: 5px;
-}
-.comment-reply a {
-    opacity: 0;
-    float: right;
-    color: #40b3ec;
-    -webkit-transition: opacity .2s;
-    -o-transition: opacity .2s;
-    transition: opacity .2s
-}
-
-.comment-inner:hover .comment-reply a {
-    opacity: 1
-}
-
-.comment-by-author {
-    position: relative
-}
-
-.comment-by-author::after {
-    content: '#';
-    color: #dc143c;
-    position: absolute;
-    right: 20px;
-    top: 22px
-}

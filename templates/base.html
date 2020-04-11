@@ -4,89 +4,199 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
     <link href="https://cdn.bootcss.com/font-awesome/5.8.0/css/all.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="/static/base.css">
-    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
     <script type="text/javascript" src='{% static "jquery-3.4.1.min.js"  %}'>
     </script>
-    <script type="text/javascript" src='{% static "bootstrap-3.3.7/js/bootstrap.min.js" %}'></script>
-    <!--  <script type="text/javascript" src='{% static "javascript/click.js" %}'></script> -->
+    <link rel="stylesheet" href="{% static 'bulma.min.css' %}">
     {% block header_extends %}{% endblock %}
 </head>
 <body>
      <!--导航-->
-    <nav id="head" class="navbar navbar-default  navbar-fixed-top" role='navigation'>
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button"  class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" >
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-                <a  class="navbar-brand" href=""><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Tomdayuの小站</a>
-            </div>
-            <div class="collapse navbar-collapse" id="">
-                <ul class="nav navbar-nav menu">
-                    
-                    <li class='{% block nav_home_active %}{% endblock %}'>
-                        <a class="home" href="{% url 'home' %} ">Home</a>
-                    </li>
-                    <li  class='{% block "nav_blog_active" %}{% endblock %}'>
-                        <a href="{% url 'home_to_coder' %}">N次猿</a>
-                    </li>
-                    <li class='{% block "poetic_active" %}{% endblock %}'>
-                        <a href="{% url 'poetic_and_prose' %}">诗文</a>
-                    </li>
-                    <li class="">
-                        <a href="">生活</a>
-                    </li>
-                    <li class="">
-                        <a href="">留言</a>
-                    </li>
-                </ul>
-                <form class="search-box" id="myform" action="{% url 'search' %}"> 
-                    {% csrf_token %}
-                    <input class="search-txt" name="wd" type="text" placeholder="输入关键词搜索..." />
-                    <a class="search-btn" href="#" onclick="tosubmit('{% url 'search' %}')">
-                        <i class="fas fa-search"></i>
-                    </a>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if not user.is_authenticated %}
-                        <li>
-                            <a href="{% url 'login' %}?from={{ request.get_full_path }}">登录</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'register' %}?from={{ request.get_full_path }}">注册</a>
-                        </li>
-                    {% else %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">{{ user.username }} <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{% url 'user_info' %}">个人资料</a></li>
-                                <li><a href="{% url 'logout' %}?from={{ request.get_full_path }}">退出</a></li>
-                            </ul>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
+    <nav id="head" class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="container is-fluid">
+        <div class="navbar-brand" style="padding-left: 20px">
+        <a  class="navbar-item brand" href="">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>Tomdayuの小站
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
         </div>
+
+        <div id="" class="navbar-menu">
+          <div class="navbar-start menu">
+            <li>
+              <a class="home" href="{% url 'home' %} ">Home</a>
+            </li>
+            
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link ncy" href="#">
+                N次猿
+              </a>
+
+              <div class="navbar-dropdown">
+                <li><a class="navbar-item" href="{% url 'home_to_coder_types' 1  %}">
+                  Django
+                </a></li>
+                <li><a class="navbar-item" href="{% url 'home_to_coder_types' 2  %}">
+                  Python
+                </a></li>
+                <li><a class="navbar-item" href="{% url 'home_to_coder_types' 3  %}">
+                  C++
+                </a></li>
+                <li><a class="navbar-item" href="{% url 'home_to_coder_types' 4  %}">
+                  Datastructure
+                </a></li>
+                <li><a class="navbar-item" href="{% url 'home_to_coder_types' 5  %}">
+                  Javascript
+                </a></li>
+                
+              </div>
+            </div>
+
+            <li>
+              <a href="{% url 'poetic_and_prose' %}">诗文</a>
+            </li>
+
+            <li>
+              <a href="#">生活</a>
+            </li>
+
+            <li>
+              <a href="#">留言</a>
+            </li>
+
+            <form class="search-box" id="myform" action="{% url 'search' %}"> 
+                {% csrf_token %}
+                <input class="search-txt" name="wd" type="text" placeholder="输入关键词搜索..." />
+                <a class="search-btn" href="#" onclick="tosubmit('{% url 'search' %}')">
+                    <i class="fas fa-search"></i>
+                </a>
+            </form>
+          </div>
+
+          <div class="navbar-end">
+            <div class="navbar-item">
+              {% if not user.is_authenticated %}
+                <div class="buttons">
+                  <a class="button is-primary" href="{% url 'login' %}?from={{ request.get_full_path }}">
+                    <strong>Sign up</strong>
+                  </a>
+                  <a class="button is-light" href="{% url 'register' %}?from={{ request.get_full_path }}">
+                    Log in
+                  </a>
+                </div>
+              {% else %}
+                <div class="navbar-item has-dropdown is-hoverable">
+                  <a href="#" class="navbar-link">
+                    {{ user.username }}
+                  </a>
+
+                  <div class="navbar-dropdown">
+                    <a class="navbar-item"  href="{% url 'user_info' %}">
+                      个人资料
+                    </a>
+                    <hr class="navbar-divider" >
+                    <a class="navbar-item" href="{% url 'logout' %}?from={{ request.get_full_path }}">
+                      退出
+                    </a>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
-    <script>
-        function tosubmit(action_str){
-        var myform=document.getElementById("myform");
-            if(action_str==null){
-                  myform.submit();
-            }else{
-                myform.action= action_str;
-                myform.submit();
-        } 
-    return false;
+    <canvas id="background-canvas"></canvas>
+    <div id="fool-container" style="min-height: 690px;">{% block content %}{% endblock %}</div>
+    {% block script_extends %}{% endblock %}
+
+    {# --canvas-- #}
+    <script type="text/javascript" src='{% static "javascript/background.js" %}'></script>
+    
+    <div id="footer" class="bottom" style="background:#fff ">
+        <div class="copyright"> <!-- 版权信息 -->
+            <div class="container">
+              <div class="columns">
+                <div class="column is-6 is-offset-3">
+                  <p class="kratos-social-icons"></p>
+                  <p> © 2020 <a href="">Tomdayu's Blog</a>. All Rights Reserved. | 已 在风雨中度过 <span id="span"></span><br>
+                  <p style="padding-left: 35px">
+                    Welcome to My<a href="https://github.com/jwl-tiger/mysite">Github</a> Made by <a href="https://github.com/jwl-tiger/mysite">Github</a> Modified by <a href="https://github.com/jwl-tiger/mysite">Imusic</a> | <a href="https://github.com/jwl-tiger/mysite">Sitemap</a>
+                  </p>
+                      
+                  </p>
+                </div>
+              </div>
+            </div>
+         </div>
+          <div class="tools"> <!-- 底部工具 --></div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+
+          // Get all "navbar-burger" elements
+          const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+          // Check if there are any navbar burgers
+          if ($navbarBurgers.length > 0) {
+
+            // Add a click event on each of them
+            $navbarBurgers.forEach( el => {
+              el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+              });
+            });
+          }
+
+        });
+        function runtime(){
+            // 初始时间，日/月/年 时:分:秒
+            X = new Date("4/10/2020 8:32:00");
+            Y = new Date();
+            T = (Y.getTime()-X.getTime());
+            M = 24*60*60*1000;
+            a = T/M;
+            A = Math.floor(a);
+            b = (a-A)*24;
+            B = Math.floor(b);
+            c = (b-B)*60;
+            C = Math.floor((b-B)*60);
+            D = Math.floor((c-C)*60);
+            //信息写入到DIV中
+            span.innerHTML = A+"天"+B+"小时"+C+"分"+D+"秒"
         }
+        setInterval(runtime, 1000);
     </script>
     <script type="text/javascript">
+        function tosubmit(action_str){
+            var myform=document.getElementById("myform");
+                if(action_str==null){
+                      myform.submit();
+                }else{
+                    myform.action= action_str;
+                    myform.submit();
+            } 
+            return false;
+        }
+
+        {# 登入模板 #}
         $("#login_medal_form").submit(function(event){
             event.preventDefault();
             $.ajax({
@@ -104,28 +214,5 @@
             });
         });
     </script>
-
-    
-    <div style="min-height: 690px;">{% block content %}{% endblock %}</div>
-    {% block script_extends %}{% endblock %}
-    <canvas id="background-canvas" style="z-index: -1!important;"></canvas>
-    <script type="text/javascript" src='{% static "javascript/background.js" %}'></script>
-    
-    <div id="footer" class="bottom" style="background:#fff ">
-        <div class="copyright"> <!-- 版权信息 -->
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3 footer-list text-center">
-                        <p class="kratos-social-icons"></p>
-                        <p> © 2020 <a href="https://moedog.org">Tomdayu's Blog</a>. All Rights Reserved. | 已在风雨中度过 <span id="span_dt_dt">1156天03小时51分42秒</span><br>
-
-                        Welcome to My<a href="" rel="nofollow">Github</a> Made by <a href="https://www.vtrois.com" target="_blank" rel="nofollow">Github</a> Modified by <a href="https://moedog.org" rel="nofollow">Imusic</a> | <a href="https://moedog.org/sitemap.html" target="_blank">Sitemap</a>    
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tools"> <!-- 底部工具 --></div>
-    </div>
   </body>
 </html>

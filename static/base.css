@@ -19,8 +19,7 @@ body{
     -webkit-box-shadow: 0 0 2px 2px rgba(172,172,172,.4)!important;
     box-shadow: 0 0 2px 2px rgba(172,172,172,.4)!important
 }
-a.navbar-brand {
-    margin-top: 10px;
+.brand {
     margin-left: 30px!important;
     color: #344449!important;
     font-size: 19px;
@@ -37,8 +36,22 @@ a.navbar-brand {
     text-align: left;
     margin: 0 20px 0 0
 }
+a.ncy{
+    color: #000;
+    font-size: 18px
+}
+a.ncy:hover{
+    color: #000;
+    text-shadow: 1px 1px 1px #000
+}
+.navbar-dropdown li{
+    margin: 0px!important
+}
+.navbar-dropdown a{
+    padding-right: 16px!important
+}
 .menu li a{
-     display: block;
+    display: block;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0 12px;
@@ -56,17 +69,12 @@ a.navbar-brand {
     -o-transition-delay: 0s;
     transition-delay: 0s;
     color: #000!important;
-    font-size: 16px;
+    font-size: 18px;
     border-bottom: none
 }
 .menu li a:hover{
     text-shadow: 1px 1px 1px #000
 }
-.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
-    margin: 0;    
-    background:#eef0f2!important;
-}
-
 .header-wrap {
     width: 100%;
     height: 570px;
@@ -118,7 +126,6 @@ a.navbar-brand {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: -999!important;
     width: 100%;
     height: 100%;
     pointer-events: none
