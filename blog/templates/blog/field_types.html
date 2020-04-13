@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {# 页面标题 #}
-{% block title %}奔跑的程序员{% endblock %}
+{% block title %}奔跑的程序猿{% endblock %}
 
 {% block "nav_blog_active" %}active{% endblock %}
 
@@ -100,9 +100,9 @@
             </div>
             <div class="column is-3">
                 <div id="kratos-widget-area">
-                    <div id="sidebar" class="affix">
+                    <div id="sidebar-field" class="affix">
                         <div id="kratos_about" class="widget widget_kratos_about clearfix">        
-                            <div class="photo-background" style="border-radius:8px;background:url({% static 'images/p2.jpg' %})"></div>    
+                            <div class="photo-background" style="border-radius:5px;background:url({% static 'images/p2.jpg' %})"></div>    
                             <div class="photo-wrapper clearfix">
                                 <a href="" rel="nofollow"><img class="about-photo" src="{% static 'images/p0.jpg' %}" alt=""></a>    
                             </div>
@@ -120,8 +120,8 @@
                                         <span class="comment-avatar">
                                             <img alt="" src="{% static 'images/p10.jpg' %}" class="avatar avatar-50 photo" height="50" width="50">
                                         </span>
-                                    <div class="comment-author" title="chz">chz</div>
-                                        <span class="comment-date">20 小时前 (03月26日)</span>
+                                    <div class="comment-author" title="chz">{{comment.user}}</div>
+                                        <span class="comment-date">{{comment.comment_time|date:"Y-m-d H:i:s"}}</span>
                                     </div>
                                     <div class="comment-content-link">
                                         <a href="">
@@ -136,6 +136,43 @@
                                 {% endfor %}
                             </div>
                         </div>
+                        
+                        <div class="widget widget_kratos_poststab">
+                            <ul id="tabul" class="nav nav-tabs">
+                                <li class="active"><span href="#types" data-toggle="tab">文章类别</span></li>
+                                <li><span href="#hot" data-toggle="tab">热点文章</span></li>
+                                <li><span href="#rand" data-toggle="tab">随机文章</span></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="types">
+                                    <ul class="list-group">
+                                        {% for types in blogtypes_for_onepage %}
+                                            <a class="list-group-item visible-lg"  href="{% url 'home_to_coder_types' types.pk  %}" rel="bookmark"><i class="fa fa-book" aria-hidden="true"></i> {{ types.type_name }} {{ types.blogtype_count }} </a>
+                                        {% empty %}
+                                            暂无分类
+                                        {% endfor %}
+                                    </ul>                      
+                                </div>
+                                <div class="tab-pane fade" id="hot">
+                                    <ul class="list-group">
+                                        {% for hot_blog in hot_blogs %}
+                                            <a class="list-group-item visible-lg"  href="{% url 'blog_detail' hot_blog.id  %}" rel="bookmark"><i class="fa fa-book" aria-hidden="true"></i><span class="glyphicon glyphicon glyphicon-plane" aria-hidden="true"></span></i>{{ hot_blog.title|safe }}</a>
+                                        {% empty %}
+                                            NO HOT BLOGS.
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" id="rand">
+                                    <ul class="list-group">
+                                        {% for blog in random_blogs %}
+                                            <a class="list-group-item visible-lg" title="" href="" rel="bookmark"><i class="fa fa-book" aria-hidden="true"></i> {{ blog.title }} </a> 
+                                        {% empty %}
+                                            暂无
+                                        {% endfor %}
+                                    </ul>                       
+                                </div>
+                            </div>
+                        </div>  
                     </div>
                 </div>
             </div>

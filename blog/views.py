@@ -1,4 +1,5 @@
 import datetime
+from random import sample
 from django.shortcuts import render,get_object_or_404
 from django.core.paginator import Paginator
 from django.conf import settings
@@ -20,7 +21,12 @@ def get_seven_days_hot_blogs():
     six_hot_blogs = []
     for blog in blogs:
         six_hot_blogs.append(blog)
-    return blogs[:6]
+    return blogs[:2]
+
+def random_blogs():
+    blogs = Blog.objects.all()
+    blogs = list(blogs)
+    return sample(blogs, 5)
 
 def get_blog_list_common_data(request,blogs_for_onepage):
     paginator = Paginator(blogs_for_onepage,settings.EACH_PAGE_BLOGS_NUMBER) #  每N页进行分页
@@ -70,19 +76,33 @@ def get_blog_list_common_data(request,blogs_for_onepage):
 def home_to_coder_types(request,field_type_pk):
     blogtypes_for_onepage = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))
     someblogs_show_type = get_object_or_404(BlogType,id=field_type_pk)    
+    hot_blogs = get_seven_days_hot_blogs() 
+    randoms = random_blogs()
     hot_comments = list(Comment.objects.all().order_by('-id'))
-    hot_comments = hot_comments[:5]    
+    hot_comments = hot_comments[:5]
     someblogs_show = Blog.objects.filter(blog_type=someblogs_show_type)
     context = get_blog_list_common_data(request,someblogs_show)
     context['blogtypes_for_onepage'] = blogtypes_for_onepage
     context['someblogs_show'] = someblogs_show
+    context['hot_blogs'] = hot_blogs
     context['hot_comments'] = hot_comments
+    context['random_blogs'] = randoms
     return render(request,'blog/field_types.html',context)
 
 def poetic_and_prose(request):
-    blogtypes_for_onepage = list(BlogType.objects.filter(id=6).annotate(blogtype_count=Count('blog')))
-    blogs_for_onepage = Blog.objects.filter(blog_type=blogtypes_for_onepage[0])
-    context = get_blog_list_common_data(request,blogs_for_onepage)
+    blogtypes_for_onepage = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))
+    blogs = list(BlogType.objects.filter(id=6).annotate(blogtype_count=Count('blog')))
+    blogs = Blog.objects.filter(blog_type=blogs[0])
+    hot_blogs = get_seven_days_hot_blogs() 
+    randoms = random_blogs()
+    hot_comments = list(Comment.objects.all().order_by('-id'))
+    hot_comments = hot_comments[:5]
+    context = get_blog_list_common_data(request,blogs)
+    context['blogtypes_for_onepage'] = blogtypes_for_onepage
+    context['blogs'] = blogs
+    context['hot_blogs'] = hot_blogs
+    context['hot_comments'] = hot_comments
+    context['random_blogs'] = randoms
     return render(request,'blog/poetic_and_prose.html',context)
 
 def write_down_life(request,year,month):
