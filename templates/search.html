@@ -7,8 +7,8 @@
 
 {% block header_extends %}
     <style>
-        body{
-            margin-top: 80px
+        #search-content{
+            text-align: center;
         }
     </style>
 {% endblock %}
@@ -16,12 +16,23 @@
 {% block nav_home_active %}active{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+    <div class="header-wrap">
+        <div class="columns is-mobile">
+            <div class="site-config" style="background-image:url('../static/images/jjj.jpg')">
+            </div>
+        </div>
+    </div>
+    <script>
+        var screenWidth=$(window).width();
+            
+        $("#body").css("width",screenWidth);
+    </script>
+    <div id="search-content" class="container">
+        <div class="columns">
+            <div class="column is-8 is-offset-2">
                 {% if search_words == '' %}
                     <h3>你没有搜索任何内容。</h3>
-                    <p>你可以尝试输入点什么东西，例如：Django</p>
+                    <p>你可以尝试输入点什么东西，例如：我是一只小毛驴~</p>
                 {% else %}
                     <h3>搜索“{{ search_words }}”，找到{{ search_blogs_count }}个结果</h3>
                     <hr>

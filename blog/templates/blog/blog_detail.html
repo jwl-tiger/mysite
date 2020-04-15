@@ -8,25 +8,20 @@
     <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
     <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
     <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-    <style>
-        #background-canvas{
-            top: 400px
-        }
-    </style>
 {% endblock %}
 
 {# 页面内容 #}
 {% block content %}
     <div class="header-wrap">
-        <div class="site-config" style="background-image:url({% static 'images/p5.jpg' %})">
+        <div id="demo" class="site-config" style="position: absolute;background-image:url({% static 'images/p5.jpg' %})">
              <div class="title" style="margin:auto">
                 <span id="typed" style="white-space:pre;">疲惫的生活总要有点温柔的梦想~</span><span class="typed-cursor"></span>
             </div>
         </div>
     </div>
 
-    <div class="under-header-warp container blog-detail">
-        <div class="columns">
+    <div class="under-header-warp container blog-detail" style="margin-top: 40px">
+        <div class="columns is-mobile">
             <div class="site-left column is-7 is-offset-1" >
                 <div class="blog-content-area">
                     <div class="blog-content-area-inner">
@@ -180,8 +175,16 @@
         </div>
     </div>    
 {% endblock %}
-    
 {% block script_extends %}
+    <script type='text/javascript'>
+            $(function(){
+                $("#demo").css({"display":"block","top":-$(window).height()})
+                $("#demo").animate({
+                    top:"0px"
+                },2000,"swing")
+                                                  
+            })
+    </script>
     <script type="text/javascript">
         $("#comment_form").submit(function(){
             // 判断是否为空

@@ -8,31 +8,26 @@
 {% block header_extends %}
     <link rel="stylesheet" href="{% static 'home.css' %}">
     <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
-    <style>
-        #background-canvas{
-            top: 400px
-        }
-    </style>
 {% endblock %}
 
 {% block nav_home_active %}active{% endblock %}
 
 {% block content %}
-    <div class="header-wrap">
-        <div class="site-config" style="background-image:url('../static/images/p3.jpg')">
-             <div class="title" style="margin:auto">
-                <span id="typed" style="white-space:pre;">I'm very vegetable and very poor.</span><span class="typed-cursor"></span>
-            </div>
+<div class="header-wrap">
+    <div  id="demo" class="site-config" style="position: absolute; background-image:url('../static/images/p3.jpg')">
+         <div class="title">
+            <span id="typed" style="white-space:pre;">I'm very vegetable and very poor.</span><span class="typed-cursor"></span>
         </div>
     </div>
-    <script>
-        var screenWidth=$(window).width();
-            
-        $("#body").css("width",screenWidth);
-    </script>
+</div>
+<script>
+    var screenWidth=$(window).width();
+        
+    $("#body").css("width",screenWidth);
+</script>
 
-<div class="columns">
-    <div class="column is-half is-offset-one-quarter" style="margin-bottom: 2em!important">
+<div class="columns is-mobile">
+    <div class="column is-half is-offset-one-quarter" style="margin-bottom: 40px">
         <div class="Highcharts container">
             <!-- 图表容器 DOM -->
             <div id="container"></div>

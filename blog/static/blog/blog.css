@@ -4,9 +4,6 @@
 }
 a{text-decoration:none!important}
 ul{list-style-type:none;}
-.under-header-warp{
-    margin-top: 60px
-}
 div.blog:not(:last-child){
     margin-bottom: 2em;
     padding-bottom: 1em;
@@ -20,6 +17,9 @@ div.blog p.blog-info{
 }
 div.blog p.blog-time{
     margin-bottom: 0;
+}
+.under-header-warp{
+    margin-top: 30px!important
 }
 /*home_to_coder_fields*/
 nav.pagination{

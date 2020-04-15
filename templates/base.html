@@ -31,16 +31,16 @@
         </a>
         </div>
 
-        <div id="" class="navbar-menu">
+        <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start menu">
-            <li>
+            <li class="active">
               <a class="home" href="{% url 'home' %} ">Home</a>
             </li>
             
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link ncy" href="#">
+              <li><a class="navbar-link" href="#">
                 N次猿
-              </a>
+              </a></li>
 
               <div class="navbar-dropdown">
                 <li><a class="navbar-item" href="{% url 'home_to_coder_types' 1  %}">
@@ -95,12 +95,12 @@
                   </a>
                 </div>
               {% else %}
-                <div class="navbar-item has-dropdown is-hoverable">
+                 <div class="navbar-item has-dropdown is-hoverable">
                   <a href="#" class="navbar-link">
                     {{ user.username }}
                   </a>
 
-                  <div class="navbar-dropdown">
+                  <div class="navbar-dropdown user-data">
                     <a class="navbar-item"  href="{% url 'user_info' %}">
                       个人资料
                     </a>
@@ -116,20 +116,32 @@
         </div>
       </div>
     </nav>
-    <canvas id="background-canvas"></canvas>
-    <div id="fool-container" style="min-height: 690px;">{% block content %}{% endblock %}</div>
-    {% block script_extends %}{% endblock %}
 
     {# --canvas-- #}
+    <canvas id="background-canvas" ></canvas>
     <script type="text/javascript" src='{% static "javascript/background.js" %}'></script>
-    
+
+    <div id="fool-container" style="min-height: 690px;">{% block content %}{% endblock %}</div>
+
+    {% block script_extends %}
+    <script type='text/javascript'>
+        $(function(){
+            $("#demo").css({"display":"block","top":-$(window).height()})
+            $("#demo").animate({
+                top:"0px"
+            },2000,"swing")
+                                              
+        })
+    </script>
+    {% endblock %}
+
     <div id="footer" class="bottom" style="background:#fff ">
         <div class="copyright"> <!-- 版权信息 -->
             <div class="container">
               <div class="columns">
                 <div class="column is-6 is-offset-3">
                   <p class="kratos-social-icons"></p>
-                  <p> © 2020 <a href="">Tomdayu's Blog</a>. All Rights Reserved. | 已 在风雨中度过 <span id="span"></span><br>
+                  <p> © 2020 <a href="">Tomdayu's Blog</a>. All Rights Reserved. | 已在风雨中度过 <span id="span"></span><br>
                   <p style="padding-left: 35px">
                     Welcome to My<a href="https://github.com/jwl-tiger/mysite">Github</a> Made by <a href="https://github.com/jwl-tiger/mysite">Github</a> Modified by <a href="https://github.com/jwl-tiger/mysite">Imusic</a> | <a href="https://github.com/jwl-tiger/mysite">Sitemap</a>
                   </p>
@@ -141,8 +153,8 @@
          </div>
           <div class="tools"> <!-- 底部工具 --></div>
     </div>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
+    <script>
+         document.addEventListener('DOMContentLoaded', () => {
 
           // Get all "navbar-burger" elements
           const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
@@ -167,6 +179,8 @@
           }
 
         });
+    </script>
+    <script type="text/javascript">
         function runtime(){
             // 初始时间，日/月/年 时:分:秒
             X = new Date("4/10/2020 8:32:00");
