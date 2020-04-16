@@ -110,10 +110,6 @@ a.navbar-link:hover{
         display: none
     }
 
-    .header-wrap {
-        width: auto!important;
-        height: 200px
-    }
 }
 .site-config {
     height: 560px;
