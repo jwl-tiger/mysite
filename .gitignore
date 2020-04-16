@@ -1,5 +1,5 @@
-media
 db.sqlite3
 settings.py
 __pycache__/
 static_collected/
+media/
