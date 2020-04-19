@@ -27,6 +27,7 @@ urlpatterns = [
     path('comment/',include('comment.urls')),
     path('user/', include('user.urls')),
     path('search/', views.search, name="search"),
+    path('send_html/', views.send_email),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

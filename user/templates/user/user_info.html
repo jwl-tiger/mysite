@@ -1,30 +1,159 @@
-{% extends 'base.html' %}
 {% load staticfiles %}
-
-{% block title %}个人资料{% endblock %}
-{% block nav_home_active %}active{% endblock %}
-{% block content %}
-    <div style="margin-top: 300px;text-align: center;" style="font-size: 20px!important">
-        抱歉哈，此页面正维护中~<a href="{% url 'home'  %}" style="font-size: 20px!important"><br>点我回到主页~</a>
-    </div>
-    <!-- <div class="containter">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>职员中心</title>
+    <link rel="stylesheet" href="{% static 'user-info.css' %}">
+    <link href="https://cdn.bootcss.com/font-awesome/5.13.0/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <script type="text/javascript" src='{% static "jquery-3.4.1.min.js"  %}'>
+    </script>
+    <script src='{% static "bootstrap-3.3.7/js/bootstrap.min.js"  %}'></script>
+</head>
+<body>
+    <div class="container met-head">
         <div class="row">
-            <div class="col-xs-10 col-xs-offset-1">
-                {% if user.is_authenticated %}
-                    <h2>{{ user.username }}</h2>
-                    <ul>
-                        <li>昵称： <a href="#">修改昵称</a></li>
-                        <li>邮箱：{% if user.email %}{{ user.email }}{% else %}未绑定 <a href="#">绑定邮箱</a>{% endif %}</li>
-                        <li>上一次登录的时间：{{ user.last_login|date:"Y-m-d H:i:s" }}</li>
-                        <li><a href="#">修改密码</a></li>
-                    </ul>
-                {% else %}
-                    <span>未登录，跳转到首页...</span>
-                    <script type="text/javascript">
-                        window.location.href = '/';
-                    </script>
-                {% endif %}
+            <div class="col-xs-6 col-sm-6 logo">
+                <ul class="list-none">
+                    <li><a href="http://www.foobar2000.com.cn/index.php?lang=cn" class="met-logo"><img src="{% static 'images/p2.jpg' %}" style="height: 90px;width: 90px;border-radius: 50%"></a></li>
+                    <li>职员中心</li>
+                </ul>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="col-xs-6 col-xs-6 user-info">
+                <ol class="breadcrumb pull-right">
+                    <li>{{ user.username }}</li>
+                    <li>Hey , {{ user.get_nickname }}</li>
+                    <li><a onclick="window.location.href='{{ return_back_url }}'">返回</a></li>
+                    <li><a href="{% url 'home' %}">首页</a></li>
+                </ol>
             </div>
         </div>
-    </div>     -->
-{% endblock %}
+    </div>
+    
+    <div class="member-profile met-member">
+        <div class="container">
+            <div class="member-profile-content">
+                <div class="row">
+                    <div class="col-xs-3 sidebar ">
+                        <div class="sidebar-box">
+                            <div class="list-group">
+                                <a href="" class="list-group-item active" title="个人信息">用户信息</a>
+                                <a href="" class="list-group-item" title="投稿">个人投稿</a>
+                                <a href="" class="list-group-item" title="讨论">我的讨论</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="show-info" class="col-xs-12 col-sm-9 met-member-index met-member-profile">
+                        <div class="panel panel-default basic">
+                            <div class="panel-heading">个人信息</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        用户名
+                                    </div>
+                                    <div class="col-xs-9">
+                                        {{ user.username }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        昵称
+                                    </div>
+                                    <div class="col-xs-9">
+                                        {% if user.get_nickname %}
+                                            {{ user.get_nickname }}&nbsp; <a href="{% url 'change_nickname' %}?from={{ request.get_full_path }}" style="float: right;">点我试试换个昵称叭~</a>
+                                        {% else %}
+                                            <a href="{% url 'change_nickname' %}?from={{ request.get_full_path }}">你还没有昵称，点我进行添加</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                   {% if user.email %} 
+                                        <div class="col-xs-3">
+                                            邮箱 
+                                        </div>
+                                        <div class="col-xs-9">
+                                            {{ user.email }}
+                                        </div>
+                                    {% else %}
+                                        <div class="col-xs-3">
+                                            邮箱 
+                                        </div>
+                                        <div class="col-xs-9">
+                                            你还没有邮箱哦~
+                                        </div> 
+                                    {% endif %}
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        最后登录 
+                                    </div>
+                                    <div class="col-xs-9">
+                                        {{ user.last_login|date:"Y-m-d H:i:s" }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}    
+                            <span>未登录，跳转到首页...</span>
+                            <script type="text/javascript">
+                                window.location.href = '/';
+                            </script>
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-9 col-sm-offset-3 met-member-index met-member-safety met-member-profile">
+                        <div class="panel panel-default basic">
+                            <div class="panel-heading">为了安全</div>
+                                <div class="media">
+                                  <div class="media-left media-middle">
+                                    <i class="fa fa-unlock-alt"></i>
+                                  </div>
+                                  <div class="media-body">
+                                        <div class="row">
+                                            <div class="col-xs-8 col-sm-10">
+                                                <h4 class="media-heading">帐号密码</h4>
+                                                用于保护帐号信息和登录安全
+                                            </div>
+                                            <div class="col-xs-4 col-xs-2">
+                                                <a  class="btn btn-default" href="{% url 'change_password' %}?from={{ request.get_full_path }}">修改</a>
+                                            </div>
+                                        </div>
+                                  </div>
+                                </div>
+                                <div class="media">
+                                  <div class="media-left media-middle">
+                                    <i class="fa fa-envelope"></i>
+                                  </div>
+                                  <div class="media-body">
+                                        <div class="row">
+                                            {% if user.email %}
+                                                <div class="col-xs-8 col-sm-10">
+                                                    <h4 class="media-heading">邮箱绑定 <span class="text-muted">已绑定</span></h4>
+                                                    你已经绑定了邮箱哦~
+                                                </div>
+                                                <div class="col-xs-4 col-xs-2">
+                                                    <a  class="btn btn-default emailadd" href="{% url 'bind_email' %}?from={{ request.get_full_path }}">换绑</a>
+                                                </div>
+                                            {% else %}
+                                                <div class="col-xs-8 col-sm-10">
+                                                    <h4 class="media-heading">邮箱绑定 <span class="text-muted">未绑定</span></h4>
+                                                    邮箱绑定可以用于登录帐号，重置密码或其他安全验证
+                                                </div>
+                                                <div class="col-xs-4 col-sm-2">
+                                                    <a  class="btn btn-default emailadd" href="{% url 'bind_email' %}?from={{ request.get_full_path }}">绑定</a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

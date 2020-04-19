@@ -52,7 +52,7 @@
                     <h3 class="comment-area-title">提交评论</h3>
                     {% if user.is_authenticated %}
                         <form id="comment_form" action="{% url 'update_comment' %}" method="POST" style="overflow:hidden">
-                            <label>{{ user.username }}，欢迎评论~</label>
+                            <label>{{ user.get_nickname_or_username }}，欢迎评论~</label>
                             <div id="reply_content_container" style="display:none;">
                                 <p>回复：</p>
                                 <div id="reply_content"></div>
@@ -79,10 +79,10 @@
                                 <div class="comment-inner">
                                     <div class="fathor-author">
                                         <img src="{% static 'images/ll.jpg' %}" class="avatar" alt="">
-                                        <span>{{ comment.user.username }}</span>
+                                        <span>{{ comment.user.get_nickname_or_username }}</span>
                                     </div>    
                                     <div class="father-content" id="comment_{{ comment.pk }}">
-                                        {{ comment.text|striptags|safe }}
+                                        {{ comment.text|safe }}
                                     </div>
                                     <div class="fathor-meta" style="min-height: 10px;">
                                          <span><i class="fa fa-bolt" aria-hidden="true" style="padding-right: 5px"></i>{{ comment.comment_time|date:"Y-m-d H:i:s" }}</span>
@@ -96,15 +96,15 @@
                                     <div class="comment-inner">
                                         <div class="reply-author">
                                             <img src="{% static 'images/dog.jpg' %}" class="avatar" alt="">
-                                            <span>{{ reply.user.username }}</span>
+                                            <span>{{ reply.user.get_nickname_or_username }}</span>
                                             <span>回复</span>
-                                            <span>{{ reply.reply_to.username }}：</span>
+                                            <span>{{ reply.reply_to.get_nickname_or_username }}：</span>
                                         </div>
                                         <div class="reply-content" id="comment_{{ reply.pk }}">
                                             {{ reply.text|striptags|safe }}
                                         </div>
                                         <div class="reply-meta" style="min-height: 10px;">
-                                            <span><i class="fa fa-bullseye" aria-hidden="true" style="padding-right: 5px"></i>{{ reply.comment_time|date:"Y-m-d H:i:s" }}</span>
+                                            <span><i class="fa fa-bomb" aria-hidden="true" style="margin-right: 5px"></i>{{ reply.comment_time|date:"Y-m-d H:i:s" }}</span>
                                             <a href="javascript:reply({{ reply.pk }});">回复</a>
                                         </div>
                                     </div>
@@ -133,22 +133,23 @@
                                 </div>
                                 <div class="author-social">
                                     <ul class="author-social-links">
-                                        <li>填写github，qq等</li>
+                                        <li><i class="fa fa-github" aria-hidden="true" style="padding-right: 5px"></i>Github
+                                            <i class="fa fa-qq" aria-hidden="true" style="padding-left: 5px;padding-right: 5px"></i>QQ</li>
                                     </ul>
                                 </div>
-                                <div class="site-status">
+                                <div class="site-status leimuf">
                                     <ul>
                                         <li>
-                                            <a href="">
+                                            <p href="">
                                                 <span class="item-count-one">49</span>
                                                 <span class="item-name-one">近日分享</span>
-                                            </a>
+                                            </p>
                                         </li>
                                         <li>
-                                            <a href="">
+                                            <p href="">
                                                 <span class="item-count-two">9</span>
                                                 <span class="item-name-two">我的推荐</span>
-                                            </a>
+                                            </p>
                                         </li>
                                     </ul>
                                 </div>
@@ -162,10 +163,11 @@
                             </section>
                             
                             <section class=" sidebar-section-active">    
-                                <ul class="rand-archive-list">
-                                    <li style=""><a href="">我们结束了77天的恋爱</a></li>
-
-                                    <li style=""><a href="">这个世界本就没有神明（未完待续）</a></li>
+                                <ul class="rand-archive-list" style="display: block;">
+                                    {% for blog in new_blogs %}
+                                        <li style=""><a href="{% url 'blog_detail' blog.pk %}">{{blog.title}}</a></li>
+                                    {% empty %}
+                                    {% endfor %}
                                 </ul>                
                             </section>
                         </div>                                
@@ -212,7 +214,7 @@
                             $("#comment_list").prepend(comment_html);
                         }else{ 
                             // 插入回复
-                            var reply_html ='<div class="reply"><div class="comment-inner"><div class="reply-author"><img src="{% static 'images/dog.jpg' %}" class="avatar" alt=""><span>' + data['username'] + '</span><span>回复</span><span>' + data['reply_to'] + '：</span></div><div class="reply-content" id="comment_' + data['pk'] + '">' + data['text'] + '</div><div class="reply-meta" style="min-height: 10px;"><span> ' + data['comment_time'] + '</span><a href="javascript:reply(' + data['pk'] + ');">回复</a></div></div></div>';
+                            var reply_html ='<div class="reply"><div class="comment-inner"><div class="reply-author"><img src="{% static 'images/dog.jpg' %}" class="avatar" alt=""><span>' + data['username'] + '</span>&nbsp;<span>回复</span>&nbsp;<span>' + data['reply_to'] + '：</span></div><div class="reply-content" id="comment_' + data['pk'] + '">' + data['text'] + '</div><div class="reply-meta" style="min-height: 10px;"><span> ' + data['comment_time'] + '</span><a href="javascript:reply(' + data['pk'] + ');">回复</a></div></div></div>';
                             $("#root_" + data['root_pk']).append(reply_html);
                         }
                         

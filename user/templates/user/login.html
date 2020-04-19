@@ -1,137 +1,129 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>登录页</title>
-        <link rel="stylesheet" href="">
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                font-family: sans-serif;
-            }
-            .box {
-                width: 300px;
-                padding: 40px;
-                position: absolute;
-                top: 50%;
-                left: 46%;
-                transform: translate(-50%, -50%);
-                background: black;
-                text-align: center;
-            }
-            .box h1 {
-                color: white;
-                text-transform: uppercase;
-                font-weight: 500;
-            }
-            .box input[type='text'],
-            .box input[type='password'] {
-                border: 0;
-                background: none;
-                display: block;
-                margin: 20px auto;
-                text-align: center;
-                border: 2px solid #3498db;
-                padding: 14px 10px;
-                width: 200px;
-                outline: none;
-                color: white;
-                border-radius: 24px;
-                transition: 0.25s;
-            }
-            .box input[type='text']:focus,
-            .box input[type='password']:focus {
-                width: 280px;
-                border-color: #2ecc71;
-            }
-            .submit {
-                border: 0;
-                background: none;
-                margin: 20px auto;
-                margin-top: 0;
-                display: inline-block;
-                text-align: center;
-                border: 2px solid #3498db;
-                padding: 10px 40px;
-                outline: none;
-                color: white;
-                border-radius: 24px;
-                transition: 0.25s;
-                cursor: pointer;
-                text-decoration: none;
-                font-size: 12px;
-            }
-            .submit:hover {
-                background: #2ecc71;
-                border-color: #2ecc71;
-            }
-            .header-wrap {
-                min-height: 860px;
-                width: 100%;
-                height: 100%;
-                padding: 0;
-                -webkit-box-shadow: initial;
-                box-shadow: initial;
-                border-radius: initial
-            }
+{% block title %}登陆|Tomdayu{% endblock %}
+{% block header_extends %}
+     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+        .box {
+            width: 300px;
+            padding: 40px;
+            position: absolute;
+            top: 50%;
+            left: 46%;
+            transform: translate(-50%, -50%);
+            background: black;
+            text-align: center;
+        }
+        .box h1 {
+            color: white;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .box input[type='text'],
+        .box input[type='password'] {
+            border: 0;
+            background: none;
+            display: block;
+            margin: 20px auto;
+            margin-bottom: 0;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: 14px 10px;
+            width: 200px;
+            outline: none;
+            color: white;
+            border-radius: 24px;
+            transition: 0.25s;
+        }
+        .box input[type='text']:focus,
+        .box input[type='password']:focus {
+            width: 240px;
+            border-color: #2ecc71;
+        }
+        .submit {
+            border: 0;
+            background: none;
+            margin-top: 10px!important;
+            margin: 20px auto;
+            margin-top: 0;
+            display: inline-block;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: 10px 40px;
+            outline: none;
+            color: white;
+            border-radius: 24px;
+            transition: 0.25s;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .submit:hover {
+            background: #2ecc71;
+            border-color: #2ecc71;
+        }
+        .header-wrap {
+            min-height: 860px;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            -webkit-box-shadow: initial;
+            box-shadow: initial;
+            border-radius: initial
+        }
 
-            @media (max-width: 991px) {
-                .menu .menu-item a {
-                    text-align:center;
-                    padding: 0
-                }
+        .site-config {
+            min-height: 1400px;
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: 50%;
+            background-repeat: no-repeat;
+            -webkit-animation: fade-in-bottom 1s .3s backwards;
+            animation: fade-in-bottom 1s .3s backwards;
+            background-attachment: fixed
+        }
+        ul{
+            color: rgb(255,0,0);
+            margin-bottom: 10px 
+        }
+        a.forgot:hover {
+            color: #b56a32
+        }
+        .danger-error {
+        }
+    </style>
+{% endblock %}
 
-                .menu .menu-item.search {
-                    display: none
-                }
-
-                .header-wrap {
-                    width: auto!important;
-                    height: 200px
-                }
-            }
-
-            .site-config {
-                min-height: 860px;
-                height: 100%;
-                width: 100%;
-                background-size: cover;
-                background-position: 50%;
-                background-repeat: no-repeat;
-                -webkit-animation: fade-in-bottom 1s .3s backwards;
-                animation: fade-in-bottom 1s .3s backwards;
-                background-attachment: fixed
-            }
-            ul{
-                font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
-                font-size: 13px;
-                list-style-type:none;
-                text-align: center;
-                color: rgb(255,0,0);
-                margin-right: 40px 
-            }
-        </style>
-    </head>
-    <body>
-        <div class="header-wrap">
-            <div class="site-config" style="background-image:url({% static 'images/p12.jpg' %})">
+{% block content %}
+    {% if not user.is_authenticated %}
+            <div class="header-wrap">
+                <div class="site-config" style="background-image:url({% static 'images/p12.jpg' %})">
+                </div>
             </div>
-        </div>
-        <div class="box">
-            <h1>Login</h1>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {% for field in login_form %}
-                    {{ field }}
-                    <p class="text-danger">{{ field.errors.as_text }}</p>
-                {% endfor %}
-                <span class="pull-left text-danger">{{ login_form.non_field_errors }}</span>
-                <input type="submit" value="登录" class="submit">
-            </form>
-        </div>
-    </body>
-</html>
+            <div class="box">
+                <h1>Login</h1>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% for field in login_form %}
+                        {{ field }}
+                        <p class="text-danger">{{ field.errors.as_text }}</p>
+                    {% endfor %}
+                    <span class="danger-error">{{ login_form.non_field_errors }}</span>
+                    <div class="clearfix"></div>
+                    <input type="submit" value="登录" class="submit">
+                    <a href="{% url 'forgot_password' %}" style="display: block;" class="forgot">忘记密码？</a>
+                </form>
+            </div>
+        {% else %}    
+            <span>已登录，跳转到首页...</span>
+            <script type="text/javascript">
+                window.location.href = '/';
+            </script>
+        {% endif %}
+{% endblock %}
+        

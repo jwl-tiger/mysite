@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block header_extends %}
+{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block nav_home_active %}active{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+    <div class="containter">
+        <div class="columns">
+            <div class="column is-4 is-offset-4 is-mobile" style="margin-top: 130px">
+                <article class="message is-info">
+                    <div class="message-header">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </div>
+                    <div class="message-body" style="padding-top: 0.5px;padding-right: 20px;padding-left: 20px">
+                        <div class="notification is-info is-light" style="padding-bottom: 60px;background-color: ">
+                        <h3 class="">{{ form_title }}</h3>
+                        <hr>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                {% if not field.is_hidden %}
+                                    <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {% endif %}
+                                {{ field }}
+                                <p class="">{{ field.errors.as_text }}</p>
+                            {% endfor %}
+                            <span id="tip" class="">{{ form.non_field_errors }}</span>
+                            <div class="">
+                                <div class="" style="display: inline-block;margin-top: 10px">
+                                    {% block other_buttons %}{% endblock %}
+                                </div>
+                                <div class="field is-grouped" style="float: right;margin-top: 10px">
+                                  <p class="control">
+                                    <input type="submit" value="{{ submit_text }}" class="button is-primary">
+                                  </p>
+                                  <p class="control">
+                                    <button class="button is-info is-light" onclick="window.location.href='{{ return_back_url }}'">
+                                      返回
+                                    </button>
+                                  </p>
+                                </div>
+                            </div>
+                        </form>
+                        </div>            
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    {% else %} 
+        <span style="margin-top: 150px">未登录，跳转到首页...</span>
+        <script type="text/javascript">
+            window.location.href = '/';
+        </script>
+    {% endif %}
+{% endblock %}

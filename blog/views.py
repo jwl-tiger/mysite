@@ -21,7 +21,7 @@ def get_seven_days_hot_blogs():
     six_hot_blogs = []
     for blog in blogs:
         six_hot_blogs.append(blog)
-    return blogs[:2]
+    return blogs[:5]
 
 def random_blogs():
     blogs = Blog.objects.all()
@@ -112,7 +112,8 @@ def write_down_life(request,year,month):
     return render(request,'blog/write_down_life.html',context)
 
 def blog_detail(request,blog_pk): 
-
+    new_blogs = list(Blog.objects.all().order_by('-id'))
+    new_blogs = new_blogs[:5]
     blog = get_object_or_404(Blog, pk=blog_pk)
     read_cookie_key = read_statistics_once_read(request, blog)
     blog_content_type = ContentType.objects.get_for_model(blog)
@@ -122,6 +123,7 @@ def blog_detail(request,blog_pk):
     context['previous_blog'] = Blog.objects.filter(create_time__gt=blog.create_time).last()
     context['next_blog'] = Blog.objects.filter(create_time__lt=blog.create_time).first()
     context['blog'] = blog
+    context['new_blogs'] = new_blogs
     context['comments'] = comments.order_by('-comment_time')
     context['comment_form'] = CommentForm(initial={'content_type': blog_content_type.model, 'object_id': blog_pk, 'reply_comment_id': 0})
     response = render(request, 'blog/blog_detail.html', context) # 响应

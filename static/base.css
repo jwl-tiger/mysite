@@ -21,6 +21,7 @@ body{
 }
 .brand {
     margin-left: 30px!important;
+    padding-right: 40px!important;
     color: #344449!important;
     font-size: 19px;
     font-weight: 700;
@@ -56,7 +57,7 @@ body{
     -o-transition-delay: 0s;
     transition-delay: 0s;
     color: #000!important;
-    font-size: 18px;
+    font-size: 17px;
     border-bottom: none
 }
 .menu li a:hover{
@@ -80,16 +81,43 @@ a.navbar-link:hover{
 .navbar-dropdown a{
     padding-top: 0!important;
     padding-bottom: 0!important;
-    font-size: 17px!important;
+    font-size: 15px!important;
     padding-right: 24px!important
 }
 .navbar-dropdown a:hover{
     background-color: rgba(96,96,96,.1)!important;
 }
-.user-data{
-    padding-top: 15px!important;
+.dropdown-content {
+    background-color: rgba(255,255,255,.6)!important;
+    border-radius: 4px;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+    padding-bottom: .5rem;
+    padding-top: .5rem;
+}
+.button:focus:not(:active) {
+    box-shadow: 0 0 0 0.125em rgba(255,255,255,.1)!important;
+}
+.info-button {
+    border: 0!important;
+    color: #1d303a!important;
+    background-color: rgba(255,255,255,.1)!important;
+}
+.user-data {
+    padding-top: 10px!important;
     padding-bottom: 10px!important;
     border-radius:8px!important;
+}
+.user-data a {
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    font-family: "Segoe UI","Helvetica Neue","Helvetica",Arial,sans-serif; 
+}
+.navbar-end .user-data a:hover {
+    background-color: rgba(96,96,96,.1)!important;
+}
+.is-active .info-button{
+    background-color: rgba(96,96,96,.1)!important
 }
 .header-wrap {
     width: 100%;

@@ -16,51 +16,35 @@
 {% block nav_home_active %}active{% endblock %}
 
 {% block content %}
-    <div class="header-wrap">
-        <div class="columns is-mobile">
-            <div class="site-config" style="background-image:url('../static/images/jjj.jpg')">
-            </div>
-        </div>
-    </div>
-    <script>
-        var screenWidth=$(window).width();
-            
-        $("#body").css("width",screenWidth);
-    </script>
-    <div id="search-content" class="container">
+    <div id="search-content" class="container" style="margin-top: 150px">
         <div class="columns">
             <div class="column is-8 is-offset-2">
-                {% if search_words == '' %}
-                    <h3>你没有搜索任何内容。</h3>
-                    <p>你可以尝试输入点什么东西，例如：我是一只小毛驴~</p>
-                {% else %}
-                    <h3>搜索“{{ search_words }}”，找到{{ search_blogs_count }}个结果</h3>
-                    <hr>
-                    {% for blog in page_of_blogs %}
-                        <a href="{% url 'blog_detail' blog.pk %}">
-                            <h4>{{ blog.title }}</h4>
-                        </a>
-                        <p>{{ blog.content | striptags | truncatechars_html:100}}</p>
-                    {% empty %}
-                        <p>没有找到任何东西，换个关键词试试吧</p>
-                    {% endfor %}
-                {% endif %}
+                <article class="message is-primary">
+                  <div class="message-header">
+                    <i class="fa fa-search-plus" aria-hidden="true"></i>
+                    <p style="float: left!important;">搜索结果</p>
+                  </div>
+                  <div class="message-body">
+                    <div class="result" style="margin-bottom: 20px">
+                        {% if search_words == '' %}
+                            <strong><em>你没有搜索任何内容</em></strong>
+                            <p>你可以尝试输入点什么东西，例如：我是一只小毛驴~</p>
+                        {% else %}
+                            <h3>搜索“{{ search_words }}”，找到{{ search_blogs_count }}个结果</h3>
+                            <hr>
+                            {% for blog in page_of_blogs %}
+                                <a href="{% url 'blog_detail' blog.pk %}">
+                                    <h4>{{ blog.title }}</h4>
+                                </a>
+                                <p>{{ blog.content | striptags | truncatechars_html:100}}</p>
+                            {% empty %}
+                                <p>没有找到任何东西，换个关键词试试吧</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                  </div>
+                </article>
             </div>
-        </div>
-        <div class="row" style="display: flex; justify-content: center;">
-            {% if page_of_blogs.has_previous %}
-                <a class="btn btn-default"
-                   href="{% url 'search' %}?wd={{ search_words }}&page={{ page_of_blogs.previous_page_number }}">
-                    上一页
-                </a>
-            {% endif %}
-
-            {% if page_of_blogs.has_next %}
-            <a class="btn btn-default"
-               href="{% url 'search' %}?wd={{ search_words }}&page={{ page_of_blogs.next_page_number }}">
-                下一页
-            </a>
-            {% endif %}
         </div>
     </div>
 {% endblock %}

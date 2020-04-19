@@ -8,6 +8,9 @@ from django.urls import reverse
 from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
 from blog.models import Blog
 from django.core.paginator import Paginator
+from django.core.mail import send_mail, send_mass_mail, EmailMultiAlternatives
+ 
+from django.conf import settings
 
 
 def get_seven_days_hot_blogs():
@@ -32,6 +35,7 @@ def home(request):
     return render(request,'home.html',context)
     
 def search(request):
+    redirect_to = request.GET.get('from', reverse('home'))
     search_words = request.GET.get('wd', '').strip()
     # 分词：按空格 & | ~
     condition = None
@@ -55,4 +59,20 @@ def search(request):
     context['search_words'] = search_words
     context['search_blogs_count'] = search_blogs.count()
     context['page_of_blogs'] = page_of_blogs
+    context['return_back_url'] = redirect_to
     return render(request, 'search.html', context)
+
+def send_email(request):
+    if request.method == 'POST':
+        # 值1：  邮件标题   值2： 邮件主体
+        # 值3： 发件人      值4： 收件人
+        res = send_mail('关于中秋节放假通知',
+                        '中秋节放三天假',
+                        '1185127147@qq.com',
+                        ['1185127147@qq.com'])
+        if res == 1:
+            return HttpResponse('邮件发送成功')
+        else:
+            return HttpResponse('邮件发送失败')
+    else:
+        return render(request, 'test.html')

@@ -1,156 +1,160 @@
+{% extends 'base.html' %}
+
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Login</title>
-        <style>
-            * {
-                font-family: 'montserrat', sans-serif;
-            }
-            body {
-                margin: 0;
-                padding: 0;
-                background: #333;
-            }
-            .login-box {
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100vh; /* vh 视口高度 viewport height 百分比单位*/
-                background-image: linear-gradient(
-                    45deg,
-                    #9fbaa8,
-                    #31354c
-                ); /*设置颜色渐变 方向(0deg垂直向上) 起点颜色 终点颜色*/
-                transition: 0.4s; /*过度效果  property duration timing-function delay 默认属性:all 0 ease 0*/
-            }
-            .login-form {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%); /*定义 2D 转换8 */
-                color: white;
-                text-align: center;
-            }
-            .login-form h1 {
-                font-weight: 400;
-                margin-top: 0;
-            }
-            .txtb {
-                display: block;
-                box-sizing: border-box;
-                width: 240px;
-                background: #ffffff28;
-                border: 1px solid white;
-                padding: 10px 20px;
-                color: white;
-                outline: none;
-                margin: 10px 0;
-                border-radius: 6px;
-                text-align: center;
-            }
-            .login-btn {
-                width: 240px;
-                background: #2c3e50;
-                border: 0;
-                color: white;
-                padding: 10px;
-                border-radius: 6px;
-                cursor: pointer;
-            }
-            .hide-login-btn {
-                color: #000;
-                position: absolute;
-                top: 40px;
-                right: 40px;
-                cursor: pointer;
-                font-size: 30px;
-                opacity: 0.7;
-                transform: rotate(45deg); /*定义 2D 转换8 */
-            }
-            .show-login-btn {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                color: white;
-                border: 2px solid;
-                padding: 15px;
-                cursor: pointer;
-            }
-            .show-login-btn:hover{
-                color: orange
-            }
-            .showed {
-                left: 0;
-            }
-            .header-wrap {
-                min-height: 860px;
-                width: 100%;
-                height: 100%;
-                padding: 0;
-                -webkit-box-shadow: initial;
-                box-shadow: initial;
-                border-radius: initial
-            }
+{% block title %}注册|Tomdayu{% endblock %}
+{% block header_extends %}
+    <style>
+        * {
+            font-family: 'montserrat', sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: #333;
+        }
+        .login-box {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100vh; /* vh 视口高度 viewport height 百分比单位*/
+            background-image: linear-gradient(
+                45deg,
+                #9fbaa8,
+                #31354c
+            ); /*设置颜色渐变 方向(0deg垂直向上) 起点颜色 终点颜色*/
+            transition: 0.4s; /*过度效果  property duration timing-function delay 默认属性:all 0 ease 0*/
+        }
+        .login-form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /*定义 2D 转换8 */
+            color: white;
+            text-align: center;
+        }
+        .login-form h1 {
+            font-weight: 400;
+            margin-top: 0;
+        }
+        .txtb {
+            display: block;
+            box-sizing: border-box;
+            width: 240px;
+            background: #ffffff28;
+            border: 1px solid white;
+            padding: 10px 20px;
+            color: white;
+            outline: none;
+            margin: 10px 0;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .login-btn {
+            width: 240px;
+            background: #2c3e50;
+            border: 0;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .hide-login-btn {
+            color: #000;
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            cursor: pointer;
+            font-size: 30px;
+            opacity: 0.7;
+            transform: rotate(45deg); /*定义 2D 转换8 */
+        }
+        .show-login-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            border: 2px solid;
+            padding: 15px;
+            cursor: pointer;
+        }
+        .show-login-btn:hover{
+            color: orange
+        }
+        .showed {
+            left: 0;
+        }
+        .header-wrap {
+            min-height: 860px;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            -webkit-box-shadow: initial;
+            box-shadow: initial;
+            border-radius: initial
+        }
 
-            @media (max-width: 991px) {
-                .menu .menu-item a {
-                    text-align:center;
-                    padding: 0
-                }
+        .site-config {
+            min-height: 1600px;
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: 50%;
+            background-repeat: no-repeat;
+            -webkit-animation: fade-in-bottom 1s .3s backwards;
+            animation: fade-in-bottom 1s .3s backwards;
+            background-attachment: fixed
+        }
+        #send_code {
+            color: orange;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            font-family: "Segoe UI","Helvetica Neue","Helvetica",Arial,sans-serif; 
+        }
+        #send_code:hover {
+            color: orange
+        }
+    </style>
+{% endblock %}
 
-                .menu .menu-item.search {
-                    display: none
-                }
-
-                .header-wrap {
-                    width: auto!important;
-                    height: 200px
-                }
-            }
-
-            .site-config {
-                min-height: 860px;
-                height: 100%;
-                width: 100%;
-                background-size: cover;
-                background-position: 50%;
-                background-repeat: no-repeat;
-                -webkit-animation: fade-in-bottom 1s .3s backwards;
-                animation: fade-in-bottom 1s .3s backwards;
-                background-attachment: fixed
-            }
-        </style>
-    </head>
-    <body>
-        <div class="header-wrap">
-            <div class="site-config" style="background-image:url({% static 'images/p8.jpg' %})">
+{% block content %}
+     {% if not user.is_authenticated %}
+            <div class="header-wrap">
+                <div class="site-config" style="background-image:url({% static 'images/p8.jpg' %})">
+                </div>
             </div>
-        </div>
-        <div class="show-login-btn">
-            -> 点我进入注册
-        </div>
-        
-        <div class="login-box">
-            <div class="hide-login-btn">
-                +
+            <div class="show-login-btn">
+                -> 点我进入注册
             </div>
-            <form action="" method="POST" class="login-form">
-                <h1>欢迎加入OwO</h1>
-                {% csrf_token %}
-                {% for field in reg_form %}
-                    {{ field }}
-                    <p class="text-danger">{{ field.errors.as_text }}</p>
-                {% endfor %}
-                <span class="pull-left text-danger">{{ reg_form.non_field_errors }}</span>
-                <input type="submit" value="注册" class="login-btn">
-            </form>
-        </div>
+            
+            <div class="columns is-mobile">
+                <div class="login-box">
+                    <div class="hide-login-btn">
+                        +
+                    </div>
+                    <form action="" method="POST" class="login-form">
+                        <h1>欢迎加入‎QwQ</h1>
+                        {% csrf_token %}
+                        {% for field in reg_form %}
+                            {{ field }}
+                            <p class="text-danger">{{ field.errors.as_text }}</p>
+                        {% endfor %}
+                        <span>{{ reg_form.non_field_errors }}</span>
+                        <div class="clearfix"></div>
+                        <button style="display: block;margin-bottom: 10px" id="send_code" class="button is-light">获取验证码</button>
+                        <input type="submit" value="注册" class="login-btn">
+                    </form>
+                </div>
+            </div>
+            
+        {% else %}    
+            <span>已登录，跳转到首页...</span>
+            <script type="text/javascript">
+                window.location.href = '/';
+            </script>
+        {% endif %}
         <script type="text/javascript">
             function hasClass(element, clssname) {
                 return element.className.match(new RegExp('(\\s|^)' + clssname + '(\\s|$)'))
@@ -181,6 +185,50 @@
                 toggleClass(loginBox[0], 'showed')
             })
         </script>
-    </body>
-</html>
+{% endblock %}
+       
+{% block script_extends %}
+    <script type="text/javascript">
+        $("#send_code").click(function(){
+            var email = $("#id_email").val();
+            if(email==""){
+                $("#tip").text('* 邮箱不能为空');
+                return false;
+            }
 
+            // 发送验证码
+            $.ajax({
+                url: "{% url 'send_verification_code' %}",
+                type: "GET",
+                data: {
+                    'email': email,
+                    'send_for': 'register_code'
+                },
+                cache: false,
+                success: function(data){
+                    if(data['status']=='ERROR'){
+                        alert(data['status']);    
+                    }                    
+                }
+            });
+
+            // 一旦发送成功，设置按钮为不可点击，避免用户成功发送后短时间内连续重复发送操作
+            $(this).addClass('disabled');
+            $(this).attr('disabled', true);
+            var time = 30;
+            $(this).text(time + 's');
+            var interval = setInterval(() => {
+                if(time <= 0){
+                    clearInterval(interval);
+                    $(this).removeClass('disabled');
+                    $(this).attr('disabled', false);
+                    $(this).text('发送验证码');
+                    return false;
+                }
+
+                time --;
+                $(this).text(time + 's');
+            }, 1000);
+        });
+    </script>
+{% endblock %}

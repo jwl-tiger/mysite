@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title %}{% endblock %}</title>
-    <link href="https://cdn.bootcss.com/font-awesome/5.8.0/css/all.css" rel="stylesheet" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="/static/base.css">
     <script type="text/javascript" src='{% static "jquery-3.4.1.min.js"  %}'>
     </script>
@@ -18,9 +18,9 @@
     <nav id="head" class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="container is-fluid">
         <div class="navbar-brand" style="padding-left: 20px">
-        <a  class="navbar-item brand" href="">
+        <a  class="navbar-item brand" href="{% url 'home' %}">
           <span class="icon">
-            <i class="fas fa-home"></i>
+            <i class="fa fa-home"></i>
           </span>Tomdayuの小站
         </a>
 
@@ -34,12 +34,12 @@
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start menu">
             <li class="active">
-              <a class="home" href="{% url 'home' %} ">Home</a>
+              <a class="home" href="{% url 'home' %} "><i class="fa fa-bed" aria-hidden="true" style="padding-right: 5px"></i>Home</a>
             </li>
             
             <div class="navbar-item has-dropdown is-hoverable">
-              <li><a class="navbar-link" href="#">
-                N次猿
+              <li><a class="" href="#">
+                <i class="fa fa-magnet" aria-hidden="true" style="padding-right: 5px"></i>N次猿
               </a></li>
 
               <div class="navbar-dropdown">
@@ -63,26 +63,26 @@
             </div>
 
             <li>
-              <a href="{% url 'poetic_and_prose' %}">诗文</a>
+              <a href="{% url 'poetic_and_prose' %}"><i class="fa fa-moon-o" aria-hidden="true" style="padding-right: 5px"></i>诗文</a>
             </li>
 
             <li>
-              <a href="#">生活&证明</a>
+              <a href="#"><i class="fa fa-cogs" aria-hidden="true" style="padding-right: 5px"></i>工具</a>
             </li>
 
             <li>
-              <a href="#">留言</a>
+              <a href="#"><i class="fa fa-pencil" aria-hidden="true" style="padding-right: 5px"></i>留言</a>
             </li>
 
-            <form class="search-box" id="myform" action="{% url 'search' %}"> 
+            <form class="search-box" id="myform" action="{% url 'search' %}?from={{ request.get_full_path }}"> 
                 {% csrf_token %}
                 <input class="search-txt" name="wd" type="text" placeholder="输入关键词搜索..." />
                 <a class="search-btn" href="#" onclick="tosubmit('{% url 'search' %}')">
-                    <i class="fas fa-search"></i>
+                    <i class="fa fa-search"></i>
                 </a>
             </form>
           </div>
-
+          
           <div class="navbar-end">
             <div class="navbar-item">
               {% if not user.is_authenticated %}
@@ -95,21 +95,28 @@
                   </a>
                 </div>
               {% else %}
-                 <div class="navbar-item has-dropdown is-hoverable">
-                  <a href="#" class="navbar-link">
-                    {{ user.username }}
-                  </a>
-
-                  <div class="navbar-dropdown user-data">
-                    <a class="navbar-item"  href="{% url 'user_info' %}">
-                      个人资料
-                    </a>
-                    <hr class="navbar-divider" >
-                    <a class="navbar-item" href="{% url 'logout' %}?from={{ request.get_full_path }}">
-                      退出
-                    </a>
+              <div class="dropdown" style="margin-right: 30px">
+                  <div class="dropdown-tigger">
+                    <button class="info-button button" style="display: inline-flex;">
+                      <i class="fa fa-address-book" aria-hidden="true" style="padding-right: 1px"></i>
+                      <span>{{ user.username }}</span>
+                      <span class="icon is-small">
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                    </button>
                   </div>
-                </div>
+                  <div class="dropdown-menu user-data">
+                    <div class="dropdown-content">
+                        <a class="navbar-item"  href="{% url 'user_info' %}?from={{ request.get_full_path }}"><i class="fa fa-grav" aria-hidden="true" style="margin-right: 5px"></i>个人信息</a>
+                        {% if user.is_staff or user.is_superuser %}
+                        <a class="navbar-item" href="{% url 'admin:index' %}">后台管理</a>
+                        {% endif %}
+                        <hr class="navbar-divider" >
+                        <a class="navbar-item" href="{% url 'logout' %}?from={{ request.get_full_path }}"><i class="fa fa-times" aria-hidden="true" style="margin-right: 5px"></i>退出登录</a>
+                    </div>
+                  </div>
+              </div>
+                 
               {% endif %}
             </div>
           </div>
@@ -121,7 +128,7 @@
     <canvas id="background-canvas" ></canvas>
     <script type="text/javascript" src='{% static "javascript/background.js" %}'></script>
 
-    <div id="fool-container" style="min-height: 690px;">{% block content %}{% endblock %}</div>
+    <div id="fool-container" style="min-height: 670px">{% block content %}{% endblock %}</div>
 
     {% block script_extends %}
     <script type='text/javascript'>
@@ -138,7 +145,7 @@
     <div id="footer" class="bottom" style="background:#fff ">
         <div class="copyright"> <!-- 版权信息 -->
             <div class="container">
-              <div class="columns">
+              <div class="columns is-mobile">
                 <div class="column is-6 is-offset-3">
                   <p class="kratos-social-icons"></p>
                   <p> © 2020 <a href="">Tomdayu's Blog</a>. All Rights Reserved. | 已在风雨中度过 <span id="span"></span><br>
@@ -177,8 +184,14 @@
               });
             });
           }
-
         });
+          //expend dropdown
+          var dropdown = document.querySelector('.dropdown');
+            dropdown.addEventListener('click',function(event) {
+              event.stopPropagation();
+              dropdown.classList.toggle('is-active');
+            });
+                 // Dropdowns
     </script>
     <script type="text/javascript">
         function runtime(){
@@ -210,24 +223,6 @@
             } 
             return false;
         }
-
-        {# 登入模板 #}
-        $("#login_medal_form").submit(function(event){
-            event.preventDefault();
-            $.ajax({
-                url: '{% url "login_for_medal" %}',
-                type: 'POST',
-                data: $(this).serialize(),
-                cache: false,
-                success: function(data){
-                    if(data['status']=='SUCCESS'){
-                        window.location.reload();
-                    }else{
-                        $('#login_medal_tip').text('用户名或密码不正确');
-                    }
-                }
-            });
-        });
     </script>
   </body>
 </html>

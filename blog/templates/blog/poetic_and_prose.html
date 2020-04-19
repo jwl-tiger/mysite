@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {# 页面标题 #}
-{% block title %}为倪写诗{% endblock %}
+{% block title %}诗文|Tomdayu{% endblock %}
 
 {% block "nav_blog_active" %}active{% endblock %}
 
@@ -37,7 +37,7 @@
                                     <a href="">随便说些什么</a></span>
                             </div>
                             <header class="post-header">
-                                <h1 class="post-title" itemprop="name headline"><a class="post-title-link" href="{% url 'blog_detail' blog.pk %}">{{ blog.title }}</a></h1>
+                                <h1 class="post-title" itemprop="name headline"><a class="post-title-link" href="{% url 'blog_detail' blog.pk %}">{{ blog.title|safe }}</a></h1>
                                 <div class="post-meta">
                                     <span><i class="fa fa-check-square" aria-hidden="true"></i></span>{{blog.create_time|date:"Y-m-d"}}</span>
                                     <span><i class="fa fa-eye" aria-hidden="true"></i> 浏览&nbsp;{{ blog.get_read_num }}</span>
@@ -60,7 +60,6 @@
                     {% if page_of_blogs.has_previous %}
                         <a class="pagination-previous" href="?page={{ page_of_blogs.previous_page_number }}">前一页</a>
                     {% else %}
-                        <a class="pagination-previous">没有啦</a>
                     {% endif %}
 
                     {# 遍历出全部页码 #}
@@ -82,7 +81,6 @@
                         <a class="pagination-next" href="?page={{ page_of_blogs.next_page_number }}" >
                          下一页</a>
                     {% else %}
-                        <a class="pagination-next">没有拉</a>
                     {% endif %}
                 </nav>
                 <div style="margin-bottom: 20px">
@@ -102,7 +100,7 @@
                                 <a href="" rel="nofollow"><img class="about-photo" src="{% static 'images/p0.jpg' %}" alt=""></a>    
                             </div>
                             <div class="textwidget">
-                                <p class="text-center"><span style="font-size: 10pt;">关于站点 <a href="">[关于]</a></span></p>
+                                <p class="text-center" style="padding-bottom: 16px"><span style="font-size: 10pt;padding-bottom: 25px">站点【关于】</span></p>
                             </div>
                         </div>
 

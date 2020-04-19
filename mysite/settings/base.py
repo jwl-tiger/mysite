@@ -119,11 +119,9 @@ CKEDITOR_CONFIGS = {
     'comment_ckeditor': {
         'toolbar': 'custom',
         'toolbar_custom': [
-            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['Bold', 'Italic', 'Underline', 'Strike', ],
             ["TextColor", "BGColor", 'RemoveFormat'],
-            ['NumberedList', 'BulletedList'],
-            ['Link', 'Unlink'],
-            ["Smiley", "SpecialChar", 'Blockquote'],
+            ["Smiley", "SpecialChar",],
         ],
         'width': 'auto',
         'height': '180',
@@ -135,4 +133,6 @@ CKEDITOR_CONFIGS = {
 
 #自定义参数
 EACH_PAGE_BLOGS_NUMBER = 3
+
+
 

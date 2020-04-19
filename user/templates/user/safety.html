@@ -1,0 +1,97 @@
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'user-info.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <script type="text/javascript" src='{% static "jquery-3.4.1.min.js"  %}'>
+    </script>
+    <script src='{% static "bootstrap-3.3.7/js/bootstrap.min.js"  %}'></script>
+</head>
+<body>
+    <div class="container met-head">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 logo">
+                <ul class="list-none">
+                    <li><a href="http://www.foobar2000.com.cn/index.php?lang=cn" class="met-logo"><img src="/memberlogo.png"></a></li>
+                    <li>职员中心</li>
+                </ul>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="col-xs-6 col-sm-6 user-info">
+                <ol class="breadcrumb pull-right">
+                    <li>{{ user.username }}</li>
+                    <li>Hey , {{ user.get_nickname }}</li>
+                    <li><a onclick="window.location.href='{{ return_back_url }}'">返回页面~</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="member-profile met-member">
+        <div class="container">
+            <div class="member-profile-content">
+                <div class="row">
+                  <div class="col-sm-3 sidebar ">
+                        <div class="sidebar-box">
+                            <div class="list-group">
+                                <a href="" class="list-group-item active" title="个人信息">个人信息</a>
+                                <a href="#" class="list-group-item " title="账号安全">账号安全</a>
+                                <a href="" class="list-group-item" title="投稿">个人投稿</a>
+                                <a href="" class="list-group-item" title="讨论">我的讨论</a>
+                            </div>
+                        </div>
+                    </div>
+
+                  <div class="col-xs-12 col-sm-9 met-member-safety met-member-profile">
+                  <div class="media">
+                    <div class="media-left media-middle">
+                      <i class="fa fa-unlock-alt"></i>
+                    </div>
+                    <div class="media-body">
+                          <div class="row">
+                              <div class="col-xs-8 col-sm-10">
+                                  <h4 class="media-heading">帐号密码</h4>
+                                  用于保护帐号信息和登录安全
+                              </div>
+                              <div class="col-xs-4 col-sm-2">
+                                  <button type="button" class="btn btn-default" data-toggle="modal" data-target=".safety-modal-pass">修改</button>
+                              </div>
+                          </div>
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left media-middle">
+                      <i class="fa fa-envelope"></i>
+                    </div>
+                    <div class="media-body">
+                          <div class="row">
+                              <div class="col-xs-8 col-sm-10">
+                                  <h4 class="media-heading">邮箱绑定 <span class="text-muted">未绑定</span></h4>
+                                  邮箱绑定可以用于登录帐号，重置密码或其他安全验证
+                              </div>
+                              <div class="col-xs-4 col-sm-2">
+                                  <button type="button" class="btn btn-default emailadd" data-mailedit="http://www.foobar2000.com.cn/member/basic.php?lang=cn&amp;a=doemailedit" data-mailadd="http://www.foobar2000.com.cn/member/basic.php?lang=cn&amp;a=dosafety_emailadd">绑定</button>
+                              </div>
+                          </div>
+                    </div>
+                  </div>
+                  <div class="media">
+                    <div class="media-left media-middle">
+                      <i class="fa fa-mobile"></i>
+                    </div>
+                    <div class="media-body">
+                          <div class="row">
+                              <div class="col-xs-8 col-sm-10">
+                                  <h4 class="media-heading">手机绑定 <span class="text-muted">未绑定</span></h4>
+                                  手机绑定可以用于登录帐号，重置密码或其他安全验证
+                              </div>
+                              <div class="col-xs-4 col-sm-2">
+                                  <button type="button" class="btn btn-default teladd">绑定</button>
+                              </div>
+                          </div>
+                    </div>
+                  </div>
+
+</body></html>
