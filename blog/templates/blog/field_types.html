@@ -26,15 +26,20 @@
             
         $("#body").css("width",screenWidth);
     </script>
-    <div class="under-header-warp container" style="margin-top: 30px">
+    <div class="under-header-warp container">
         <div class="columns is-mobile">
             <div class="column is-7 is-offset-1">
+                       <div class="notification is-info is-light">
+                          <button class="delete"></button>
+                          <i class="fa fa-bookmark-o" aria-hidden="true" style="padding-right: 5px"></i>
+                          Hello，{{ thisone_type.0.type_name|safe }}
+                        </div>
                 {% for blog in page_of_blogs %}
                     <section id="posts">
                         <article class="post" itemscope="">
                             <div class="post-badge">
                                 <span itemprop="about" itemscope="">
-                                    <a href="">随便说些什么</a></span>
+                                    <a href="">{{ thisone_type.0.type_name|safe }}</a></span>
                             </div>
                             <header class="post-header">
                                 <h1 class="post-title" itemprop="name headline"><a class="post-title-link" href="{% url 'blog_detail' blog.pk %}">{{ blog.title|safe }}</a></h1>
@@ -171,5 +176,16 @@
             </div>
         </div>  
     </div>  
-            
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+    $notification = $delete.parentNode;
+
+    $delete.addEventListener('click', () => {
+      $notification.parentNode.removeChild($notification);
+
+    });
+  });
+});
+    </script>
 {% endblock %}

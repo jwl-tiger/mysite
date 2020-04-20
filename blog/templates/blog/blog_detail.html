@@ -101,7 +101,7 @@
                                             <span>{{ reply.reply_to.get_nickname_or_username }}：</span>
                                         </div>
                                         <div class="reply-content" id="comment_{{ reply.pk }}">
-                                            {{ reply.text|striptags|safe }}
+                                            {{ reply.text|safe }}
                                         </div>
                                         <div class="reply-meta" style="min-height: 10px;">
                                             <span><i class="fa fa-bomb" aria-hidden="true" style="margin-right: 5px"></i>{{ reply.comment_time|date:"Y-m-d H:i:s" }}</span>

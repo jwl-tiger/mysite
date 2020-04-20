@@ -75,6 +75,7 @@ def get_blog_list_common_data(request,blogs_for_onepage):
 
 def home_to_coder_types(request,field_type_pk):
     blogtypes_for_onepage = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))
+    thisone_type = list(BlogType.objects.filter(id=field_type_pk))     
     someblogs_show_type = get_object_or_404(BlogType,id=field_type_pk)    
     hot_blogs = get_seven_days_hot_blogs() 
     randoms = random_blogs()
@@ -83,6 +84,7 @@ def home_to_coder_types(request,field_type_pk):
     someblogs_show = Blog.objects.filter(blog_type=someblogs_show_type)
     context = get_blog_list_common_data(request,someblogs_show)
     context['blogtypes_for_onepage'] = blogtypes_for_onepage
+    context['thisone_type'] = thisone_type
     context['someblogs_show'] = someblogs_show
     context['hot_blogs'] = hot_blogs
     context['hot_comments'] = hot_comments
