@@ -331,7 +331,7 @@ label{
     font-weight: 700;
 }
 .blog-detail div,form{
-    border-radius: 6px
+    border-radius: 5px
 }
 div.django-ckeditor-widget {
     width: 100%;
