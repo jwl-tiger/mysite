@@ -8,7 +8,12 @@ class BlogType(models.Model):
 
     def __str__(self):
         return self.type_name
- 
+
+STATUS_CHOICES = [
+    ('d', 'Draft'),
+    ('p', 'Published'),
+    ('w', 'Withdrawn'),
+] 
 class Blog(models.Model,ReadNumExpandMethod):
     title = models.CharField(max_length=50)
     blog_type = models.ForeignKey(BlogType,on_delete=models.DO_NOTHING)
@@ -17,8 +22,9 @@ class Blog(models.Model,ReadNumExpandMethod):
     read_details = GenericRelation(ReadDetail)
     create_time = models.DateTimeField(auto_now_add=True)
     last_updated_time = models.DateTimeField(auto_now=True)
-    def __str__(self):
-        return "Blog: %s" % self.title
+    status = models.CharField(max_length=1,choices=STATUS_CHOICES,default="d")
 
+    def __str__(self):
+        return "<Blog: %s>" % self.title
     class Meta:
         ordering = ['-create_time']

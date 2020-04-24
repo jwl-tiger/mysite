@@ -32,14 +32,14 @@
                        <div class="notification is-info is-light">
                           <button class="delete"></button>
                           <i class="fa fa-bookmark-o" aria-hidden="true" style="padding-right: 5px"></i>
-                          Hello，{{ thisone_type.0.type_name|safe }}
+                          Hello，{{ thisone_type.type_name|safe }}
                         </div>
                 {% for blog in page_of_blogs %}
                     <section id="posts">
                         <article class="post" itemscope="">
                             <div class="post-badge">
                                 <span itemprop="about" itemscope="">
-                                    <a href="">{{ thisone_type.0.type_name|safe }}</a></span>
+                                    <a href="#">{{ thisone_type.type_name|safe }}</a></span>
                             </div>
                             <header class="post-header">
                                 <h1 class="post-title" itemprop="name headline"><a class="post-title-link" href="{% url 'blog_detail' blog.pk %}">{{ blog.title|safe }}</a></h1>
@@ -144,7 +144,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade in active" id="types">
                                     <ul class="list-group">
-                                        {% for types in blogtypes_for_onepage %}
+                                        {% for types in coder_types %}
                                             <a class="list-group-item visible-lg"  href="{% url 'home_to_coder_types' types.pk  %}" rel="bookmark"><i class="fa fa-book" aria-hidden="true"></i> {{ types.type_name }} {{ types.blogtype_count }} </a>
                                         {% empty %}
                                             暂无分类

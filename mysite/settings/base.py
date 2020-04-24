@@ -123,23 +123,22 @@ CKEDITOR_CONFIGS = {
             ['Source', '-', 'Bold', 'Italic']
         ],
         'toolbar_Full': [
-            [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ],
-            [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ],
-            [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ],
-            [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ],
+            [ 'NewPage','Preview','Save'],
+            [ 'Cut','Copy'],
+            [ 'Find','Replace','SelectAll'],
+            [ 'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','Outdent','Indent','-','BidiLtr','BidiRtl','-','Maximize','ShowBlocks',],
             '/',
-            [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ],
-            [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv', '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ],
-            [ 'Link','Unlink','Anchor' ],
-            [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ],
+            [ 'Undo','Redo','-','RemoveFormat','-','Bold','Italic','Underline','Strike','Subscript','Superscript','SpecialChar', ],
+            [ 'NumberedList','BulletedList','-',],
+            [ 'Link','Unlink','-','-','HorizontalRule'],
+            [ 'Smiley','Image','Flash','-', ],
             '/',
             [ 'Styles','Format','Font','FontSize' ] ,
             [ 'TextColor','BGColor' ] ,
-            [ 'Maximize', 'ShowBlocks','-','About' ] ,
             ['CodeSnippet'],  #代码段按钮
         ],
         'toolbar': 'Full',
-        'extraPlugins': ','.join(['codesnippet', 'prism', 'widget', 'lineutils']),   #代码段插件
+        'extraPlugins': ','.join(['codesnippet','widget', 'lineutils']),   #代码段插件
     },
     'comment_ckeditor': {
         'toolbar': 'custom',

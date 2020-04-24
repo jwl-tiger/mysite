@@ -139,7 +139,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade in active" id="newest">
                                     <ul class="list-group">
-                                        {% for types in blogtypes_for_onepage %}
+                                        {% for types in coder_types %}
                                             <a class="list-group-item visible-lg"  href="{% url 'home_to_coder_types' types.pk  %}" rel="bookmark"><i class="fa  fa-book"></i> {{ types.type_name }} {{ types.blogtype_count }} </a>
                                         {% empty %}
                                             暂无分类
@@ -149,7 +149,7 @@
                                 <div class="tab-pane fade" id="hot">
                                     <ul class="list-group">
                                         {% for hot_blog in hot_blogs %}
-                                            <a class="list-group-item visible-lg"  href="{% url 'blog_detail' hot_blog.id  %}" rel="bookmark"><i class="fa  fa-book"><span class="glyphicon glyphicon glyphicon-plane" aria-hidden="true"></span></i>{{ hot_blog.title|safe }}&nbsp;{{ hot_blog.read_num_sum|safe }}</a>
+                                            <a class="list-group-item visible-lg"  href="{% url 'blog_detail' hot_blog.id  %}" rel="bookmark"><i class="fa  fa-book"><span class="glyphicon glyphicon glyphicon-plane" aria-hidden="true"></span></i>{{ hot_blog.title|safe }}</a>
                                         {% empty %}
                                             NO HOT BLOGS.
                                         {% endfor %}

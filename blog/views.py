@@ -74,16 +74,15 @@ def get_blog_list_common_data(request,blogs_for_onepage):
 
 
 def home_to_coder_types(request,field_type_pk):
-    blogtypes_for_onepage = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))
-    thisone_type = list(BlogType.objects.filter(id=field_type_pk))     
-    someblogs_show_type = get_object_or_404(BlogType,id=field_type_pk)    
+    coder_types = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))
+    thisone_type = get_object_or_404(BlogType,id=field_type_pk)    
     hot_blogs = get_seven_days_hot_blogs() 
     randoms = random_blogs()
     hot_comments = list(Comment.objects.all().order_by('-id'))
     hot_comments = hot_comments[:5]
-    someblogs_show = Blog.objects.filter(blog_type=someblogs_show_type)
+    someblogs_show = Blog.objects.filter(blog_type=thisone_type)
     context = get_blog_list_common_data(request,someblogs_show)
-    context['blogtypes_for_onepage'] = blogtypes_for_onepage
+    context['coder_types'] = coder_types
     context['thisone_type'] = thisone_type
     context['someblogs_show'] = someblogs_show
     context['hot_blogs'] = hot_blogs
@@ -92,15 +91,15 @@ def home_to_coder_types(request,field_type_pk):
     return render(request,'blog/field_types.html',context)
 
 def poetic_and_prose(request):
-    blogtypes_for_onepage = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))
-    blogs = list(BlogType.objects.filter(id=6).annotate(blogtype_count=Count('blog')))
-    blogs = Blog.objects.filter(blog_type=blogs[0])
+    coder_types = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))
+    blogtype_for_prose = list(BlogType.objects.filter(id=6).annotate(blogtype_count=Count('blog')))
+    blogs = Blog.objects.filter(blog_type=blogtype_for_prose[0],status="p")
     hot_blogs = get_seven_days_hot_blogs() 
     randoms = random_blogs()
     hot_comments = list(Comment.objects.all().order_by('-id'))
     hot_comments = hot_comments[:5]
     context = get_blog_list_common_data(request,blogs)
-    context['blogtypes_for_onepage'] = blogtypes_for_onepage
+    context['coder_types'] = coder_types
     context['blogs'] = blogs
     context['hot_blogs'] = hot_blogs
     context['hot_comments'] = hot_comments
@@ -129,7 +128,7 @@ def blog_detail(request,blog_pk):
     context['comments'] = comments.order_by('-comment_time')
     context['comment_form'] = CommentForm(initial={'content_type': blog_content_type.model, 'object_id': blog_pk, 'reply_comment_id': 0})
     response = render(request, 'blog/blog_detail.html', context) # 响应
-    response.set_cookie(read_cookie_key, 'true') # 阅读cookie标记
+    response.set_cookie(read_cookie_key, 'true',max_age=21600) # 阅读cookie标记
     return response
     '''
     blog = get_object_or_404(Blog,pk=blog_pk)
