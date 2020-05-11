@@ -13,7 +13,7 @@ class BlogTypeAdmin(admin.ModelAdmin):
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('id','title','blog_type','author','get_read_num','create_time','last_updated_time','status')
 
-    actions = ['make_published']
+    actions = ['make_published','make_draft']
 
     def make_published(self, request, queryset):
         rows_updated = queryset.update(status='p')
@@ -22,6 +22,15 @@ class BlogAdmin(admin.ModelAdmin):
         else:
             message_bit = "%s 篇文章" % rows_updated
         self.message_user(request,"%s 已被成功发表" % message_bit)
+    make_published.short_description = "Mark as published"
+
+    def make_draft(self, request, queryset):
+        rows_updated = queryset.update(status='d')
+        if rows_updated == 1:
+            message_bit = "1 篇文章"
+        else:
+            message_bit = "%s 篇文章" % rows_updated
+        self.message_user(request,"%s 已被标记为草案" % message_bit)
     make_published.short_description = "Mark as published"
     # ordering = ('id',) 
 

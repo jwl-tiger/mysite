@@ -80,7 +80,7 @@ def home_to_coder_types(request,field_type_pk):
     randoms = random_blogs()
     hot_comments = list(Comment.objects.all().order_by('-id'))
     hot_comments = hot_comments[:5]
-    someblogs_show = Blog.objects.filter(blog_type=thisone_type)
+    someblogs_show = Blog.objects.filter(blog_type=thisone_type,status="p")
     context = get_blog_list_common_data(request,someblogs_show)
     context['coder_types'] = coder_types
     context['thisone_type'] = thisone_type
@@ -121,8 +121,8 @@ def blog_detail(request,blog_pk):
     comments = Comment.objects.filter(content_type=blog_content_type, object_id=blog.pk, parent=None)
 
     context = {}
-    context['previous_blog'] = Blog.objects.filter(create_time__gt=blog.create_time).last()
-    context['next_blog'] = Blog.objects.filter(create_time__lt=blog.create_time).first()
+    context['previous_blog'] = Blog.objects.filter(create_time__gt=blog.create_time,status="p").last()
+    context['next_blog'] = Blog.objects.filter(create_time__lt=blog.create_time,status="p").first()
     context['blog'] = blog
     context['new_blogs'] = new_blogs
     context['comments'] = comments.order_by('-comment_time')
@@ -149,4 +149,3 @@ def blog_detail(request,blog_pk):
     return response   
     '''                              #每一次通过request请求服务器（后台程序）时，request可以把这个浏览器已保存的有效的cookie提交给服务器去检验，例如通过request.COOKIES.get方法去查
     
-

@@ -18,6 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'read_statistics',
     'comment',
     'user',
+
 ]
 
 MIDDLEWARE = [
@@ -135,7 +137,7 @@ CKEDITOR_CONFIGS = {
             '/',
             [ 'Styles','Format','Font','FontSize' ] ,
             [ 'TextColor','BGColor' ] ,
-            ['CodeSnippet'],  #代码段按钮
+            ['CodeSnippet','Source'],  #代码段按钮
         ],
         'toolbar': 'Full',
         'extraPlugins': ','.join(['codesnippet','widget', 'lineutils']),   #代码段插件

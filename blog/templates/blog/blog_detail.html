@@ -31,7 +31,7 @@
                             <span><i class="fa fa-eye" aria-hidden="true"></i> 浏览&nbsp;{{ blog.get_read_num }}</span>
                             <span><a itemprop="discussionUrl" href=""><i class="fa fa-comments" aria-hidden="true"></i> 评论数&nbsp;{% get_comment_count blog %}</a></span>
                         </div>
-                        <div class="blog-content">{{ blog.content|safe }}</div>
+                        <div class="blog-content" style="list-style-type: disc!important;">{{ blog.content|safe }}</div>
 
                         <footer class="post-footer">
                             {% if previous_blog %}
@@ -178,6 +178,11 @@
     </div>    
 {% endblock %}
 {% block script_extends %}
+    <script type="text/javascript">
+      window.onload=setTimeout(function(){
+         window.scrollTo(0,500);  //修改知道500为指定内高度容
+      },5);
+    </script>
     <script type='text/javascript'>
             $(function(){
                 $("#demo").css({"display":"block","top":-$(window).height()})
