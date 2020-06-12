@@ -6,8 +6,8 @@ from .models import ReadNum,ReadDetail
 
 
 def read_statistics_once_read(request,obj):
-    ct = ContentType.objects.get_for_model(obj) #获取到obj隶属的模型,作为ContentType获取到的对象 注：一个ContentType对象对应一个具体的模型
-    key = "%s_%s_read" % (ct.model,obj.pk) #.model：以字符串的形式返回与ContentType对象对应的模型的名称
+    ct = ContentType.objects.get_for_model(obj) #获取obj隶属的模型 注：ContentType对象？：<ContentType: user> 
+    key = "%s_%s_read" % (ct.model,obj.pk) #.model：以字符串的形式返回与ContentType对象对应的模型的名称，如user
 
     if not request.COOKIES.get(key): #第一次请求，get不到这样key形式的cookie，执行加1操作
         #总阅读数+1

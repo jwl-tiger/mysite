@@ -215,11 +215,11 @@
                     if(data['status']=="SUCCESS"){
                         if($('#reply_comment_id').val()=='0'){
                             // 插入评论
-                            var comment_html = '<div id="root_' + data['pk'] + '" class="comment"><div class="fathor"><div class="comment-inner"><div class="fathor-author"><img src="{% static 'images/ll.jpg' %}" class="avatar" alt=""><span>' + data['username'] + '</span></div><div class="father-content" id="comment_' + data['pk'] + '">' + data['text'] + '</div><div class="fathor-meta" style="min-height: 10px;"><span> ' + data['comment_time'] + '</span><a href="javascript:reply(' + data['pk'] + ');">回复</a></div></div></div></div>';
+                            var comment_html = '<div id="root_' + data['pk'] + '" class="comment"><div class="fathor"><div class="comment-inner"><div class="fathor-author"><img src="/media/{{ user.get_avatar }}" class="avatar" alt=""><span>' + data['username'] + '</span></div><div class="father-content" id="comment_' + data['pk'] + '">' + data['text'] + '</div><div class="fathor-meta" style="min-height: 10px;"><span> ' + data['comment_time'] + '</span><a href="javascript:reply(' + data['pk'] + ');">回复</a></div></div></div></div>';
                             $("#comment_list").prepend(comment_html);
                         }else{ 
                             // 插入回复
-                            var reply_html ='<div class="reply"><div class="comment-inner"><div class="reply-author"><img src="{% static 'images/dog.jpg' %}" class="avatar" alt=""><span>' + data['username'] + '</span>&nbsp;<span>回复</span>&nbsp;<span>' + data['reply_to'] + '：</span></div><div class="reply-content" id="comment_' + data['pk'] + '">' + data['text'] + '</div><div class="reply-meta" style="min-height: 10px;"><span> ' + data['comment_time'] + '</span><a href="javascript:reply(' + data['pk'] + ');">回复</a></div></div></div>';
+                            var reply_html ='<div class="reply"><div class="comment-inner"><div class="reply-author"><img src="/media/{{ user.get_avatar }}" class="avatar" alt=""><span>' + data['username'] + '</span>&nbsp;<span>回复</span>&nbsp;<span>' + data['reply_to'] + '：</span></div><div class="reply-content" id="comment_' + data['pk'] + '">' + data['text'] + '</div><div class="reply-meta" style="min-height: 10px;"><span> ' + data['comment_time'] + '</span><a href="javascript:reply(' + data['pk'] + ');">回复</a></div></div></div>';
                             $("#root_" + data['root_pk']).append(reply_html);
                         }
                         

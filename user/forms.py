@@ -13,7 +13,7 @@ class LoginForm(forms.Form):
     def clean(self):
         username_or_email = self.cleaned_data['username_or_email']
         password = self.cleaned_data['password']
-
+                                                                                 #authenticate()方法是用于验证的方法，如果验证成功会返回一个User实例                                   
         user = auth.authenticate(username=username_or_email, password=password)  #用username判断存在与否
                                                                             #如存在，（跳转最下面执行）返回cleaned_data，并在views里做登陆操作。
 
@@ -118,6 +118,8 @@ class ChangeNicknameForm(forms.Form):
             raise forms.ValidationError("新的昵称不能为空")
         return nickname_new
 
+class ChangeAvatarForm(forms.Form):
+    new_avatar = forms.FileField(label='请上传头像')
 
 class BindEmailForm(forms.Form):
     email = forms.EmailField(

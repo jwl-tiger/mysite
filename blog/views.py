@@ -113,7 +113,7 @@ def write_down_life(request,year,month):
     return render(request,'blog/write_down_life.html',context)
 
 def blog_detail(request,blog_pk): 
-    new_blogs = list(Blog.objects.all().order_by('-id'))
+    new_blogs = list(Blog.objects.filter(status="p").order_by('-id'))
     new_blogs = new_blogs[:5]
     blog = get_object_or_404(Blog, pk=blog_pk)
     read_cookie_key = read_statistics_once_read(request, blog)

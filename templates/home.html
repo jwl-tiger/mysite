@@ -1,72 +1,175 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-    首页|Tomdayu
-{% endblock %}
+{# 页面标题 #}
+{% block title %}Home|Tomdayu{% endblock %}
 
+{% block "nav_blog_active" %}active{% endblock %}
+
+{% load staticfiles %}
+{% load comments_tag %}
 {% block header_extends %}
-    <link rel="stylesheet" href="{% static 'home.css' %}">
-    <script src="//cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
 {% endblock %}
 
-{% block nav_home_active %}active{% endblock %}
-
+{# 页面内容 #}
 {% block content %}
-<div class="header-wrap">
-    <div  id="demo" class="site-config" style="position: absolute; background-image:url('../static/images/p3.jpg')">
-         <div class="title">
-            <span id="typed" style="white-space:pre;">I'm very vegetable and very poor.</span><span class="typed-cursor"></span>
+    <div class="header-wrap">
+        <div  id="demo" class="site-config" style="position: absolute; background-image:url({% static 'images/pi.jpg' %})">
+             <div class="title" style="margin:auto">
+                <span id="typed" style="white-space:pre;">I'm very vegetable and very poor.</span><span class="typed-cursor"></span>
+            </div>
         </div>
     </div>
-</div>
-<script>
-    var screenWidth=$(window).width();
-    $("#body").css("width",screenWidth);
-</script>
+    <script>
+        var screenWidth=$(window).width();
+            
+        $("#body").css("width",screenWidth);
+    </script>
+    <div class="under-header-warp container" style="margin-top: 30px">
+        <div class="columns is-mobile">
+            <div class="column is-7 is-offset-1">
+                {% for blog in page_of_blogs %}
+                    <section id="posts">
+                        <article class="post" itemscope="">
+                            <div class="post-badge">
+                                <span itemprop="about" itemscope="">
+                                    <a href="">随便说些什么</a></span>
+                            </div>
+                            <header class="post-header">
+                                <h1 class="post-title" itemprop="name headline"><a class="post-title-link" href="{% url 'blog_detail' blog.pk %}">{{ blog.title|safe }}</a></h1>
+                                <div class="post-meta">
+                                    <span><i class="fa fa-check-square" aria-hidden="true"></i></span>{{blog.create_time|date:"Y-m-d"}}</span>
+                                    <span><i class="fa fa-eye" aria-hidden="true"></i> 浏览&nbsp;{{ blog.get_read_num }}</span>
+                                    <span itemprop="interactionCount"><a itemprop="discussionUrl" href=""><i class="fa fa-comments" aria-hidden="true"></i> 评论数&nbsp;{% get_comment_count blog %}</a></span>
+                                </div>
+                            </header>
+                            <img src="" alt="">
+                                <div class="post-content" itemprop="articleBody">
+                                    <p>{{ blog.content|striptags|truncatechars:150}}</p>
+                                        <div text-center="" class="post-button">
+                                            <a href="{% url 'blog_detail' blog.id %}">-   阅读全文   -  </a>
+                                        </div>
+                                </div>
+                        </article>
+                    </section>
+                {% empty %}
+                    <h3>--暂无博客--</h3>
+                {% endfor %}
+                <nav class="pagination is-centered is-small" role="navigation" aria-label="pagination" style="margin-bottom: 30px">
+                    {% if page_of_blogs.has_previous %}
+                        <a class="pagination-previous" href="?page={{ page_of_blogs.previous_page_number }}">前一页</a>
+                    {% else %}
+                    {% endif %}
 
-<div class="columns is-mobile">
-    <div class="column is-half is-offset-one-quarter" style="margin-bottom: 40px">
-        <div class="Highcharts container">
-            <!-- 图表容器 DOM -->
-            <div id="container"></div>
-            <!-- 今天24小时之内的热门博客 -->
-            <script>
-                // 图表配置
-                var options = {
-                    chart: { type: 'line' },
-                    title: { text: "" },
-                    xAxis: {
-                        categories: {{ dates|safe }},  // x 轴分类
-                        tickmarkPlacement: 'on',
-                        title: { text: '前七日阅读量变化' }
-                    },
-                    yAxis: {
-                        title: { text: null},
-                        labels: {enabled: false},
-                        gridLineDashStyle: 'Dash',
-                    },
-                    series: [{                              // 数据列
-                        name: '阅读量',                        // 数据列名
-                        data: {{ read_nums }}
-                    }],
-                    plotOptions: {
-                        line: {
-                            dataLabels: {
-                                enabled: true
-                            }
-                        }
-                    },
-                    legend: { enabled: false },
-                    credits: { enabled: false },
-                };
-                // 图表初始化函数
-                var chart = Highcharts.chart('container', options);
-            </script>
-        </div>
+                    {# 遍历出全部页码 #}
+                    <ul class="pagination-list"> 
+                        {% for page_num in page_range %}
+                            {% if page_num == page_of_blogs.number %}
+                                <li><a class="pagination-link is-current" aria-current="page">{{ page_num }}</a></li> 
+                            {% else %} 
+                                {%  if page_num == '...' %}
+                                    <li><span>{{ page_num }}</span></li>
+                                {% else %}
+                                    <li><a class="pagination-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %} 
+                    </ul>
+                    {# 下一页 #}
+                    {% if page_of_blogs.has_next %}
+                        <a class="pagination-next" href="?page={{ page_of_blogs.next_page_number }}" >
+                         下一页</a>
+                    {% else %}
+                    {% endif %}
+                </nav>
+                <div style="margin-bottom: 20px">
+                    <p style="text-align: center;">
+                        共有{{page_of_blogs.paginator.count}}篇博客;当前第{{ page_of_blogs.number }}页，
+                        共{{ page_of_blogs.paginator.num_pages }}页
+                    </p>
+                </div>
+                
+            </div>
+            <div class="column is-3">
+                <div id="kratos-widget-area">
+                    <div id="sidebar-field" class="affix">
+                        <div id="kratos_about" class="widget widget_kratos_about clearfix">        
+                            <div class="photo-background" style="border-radius:5px;background:url({% static 'images/p2.jpg' %})"></div>    
+                            <div class="photo-wrapper clearfix">
+                                <a href="" rel="nofollow"><img class="about-photo" src="{% static 'images/p0.jpg' %}" alt=""></a>    
+                            </div>
+                            <div class="textwidget">
+                                <p class="text-center"><span style="font-size: 10pt;">关于站点 <a href="">[关于]</a></span></p>
+                            </div>
+                        </div>
+
+                        <div id="kratos_comments" class="widget widget_kratos_comments clearfix">
+                            <h4 class="widget-title">最近评论</h4>
+                            <div class="recentcomments">
+                                {% for comment in hot_comments %}
+                                <li class="comment-listitem">
+                                    <div class="comment-user">
+                                        <span class="comment-avatar">
+                                            <img alt="" src="{% static 'images/p10.jpg' %}" class="avatar avatar-50 photo" height="50" width="50">
+                                        </span>
+                                    <div class="comment-author" title="chz">{{comment.user.get_nickname_or_username}}</div>
+                                        <span class="comment-date">{{comment.comment_time|date:"Y-m-d H:i:s"}}</span>
+                                    </div>
+                                    <div class="comment-content-link">
+                                        <a href="">
+                                            <div class="comment-content">
+                                                {{ comment.text|safe }}
+                                            </div>
+                                        </a>    
+                                    </div>
+                                </li>
+                                {% empty %}
+                                    暂无评论QAQ
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="widget widget_kratos_poststab">
+                            <ul id="tabul" class="nav nav-tabs">
+                                <li class="active"><span href="#newest" data-toggle="tab">文章类别</span></li>
+                                <li><span href="#hot" data-toggle="tab">热点文章</span></li>
+                                <li><span href="#rand" data-toggle="tab">随机文章</span></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="newest">
+                                    <ul class="list-group">
+                                        {% for types in coder_types %}
+                                            <a class="list-group-item visible-lg"  href="{% url 'home_to_coder_types' types.pk  %}" rel="bookmark"><i class="fa  fa-book"></i> {{ types.type_name }} {{ types.blogtype_count }} </a>
+                                        {% empty %}
+                                            暂无分类
+                                        {% endfor %}
+                                    </ul>                      
+                                </div>
+                                <div class="tab-pane fade" id="hot">
+                                    <ul class="list-group">
+                                        {% for hot_blog in hot_blogs %}
+                                            <a class="list-group-item visible-lg"  href="{% url 'blog_detail' hot_blog.id  %}" rel="bookmark"><i class="fa  fa-book"><span class="glyphicon glyphicon glyphicon-plane" aria-hidden="true"></span></i>{{ hot_blog.title|safe }}</a>
+                                        {% empty %}
+                                            NO HOT BLOGS.
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" id="rand">
+                                    <ul class="list-group">
+                                        {% for blog in random_blogs %}
+                                            <a class="list-group-item visible-lg" title="" href="{% url 'blog_detail' blog.pk %}" rel="bookmark"><i class="fa  fa-book"></i> {{ blog.title }} </a> 
+                                        {% empty %}
+                                            暂无
+                                        {% endfor %}
+                                    </ul>                       
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>  
     </div>
-</div>         
-        
-
-   
+            
 {% endblock %}

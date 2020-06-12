@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.http import JsonResponse
 from django.core.mail import send_mail
-from .forms import LoginForm, RegForm, ChangeNicknameForm, BindEmailForm,ChangePasswordForm,ForgotPasswordForm
+from .forms import LoginForm, RegForm, ChangeNicknameForm, BindEmailForm,ChangePasswordForm,ForgotPasswordForm,ChangeAvatarForm
 from .models import Profile
 
 
@@ -68,7 +68,22 @@ def user_info(request):
     context = {}
     context['return_back_url'] = redirect_to
     return render(request, 'user/user_info.html', context)
-    
+
+def user_info(request):
+    redirect_to = request.GET.get('from', reverse('home'))
+    context = {}
+    context['return_back_url'] = redirect_to
+    if request.method == "POST":
+        new_avatar = ChangeAvatarForm(request.POST, request.FILES)
+        if new_avatar.is_valid():
+            avatar = new_avatar.cleaned_data['new_avatar']
+            profile, created = Profile.objects.get_or_create(user=request.user,avatar= avatar)
+            profile.save()
+        return render(request, 'user/user_info.html', context) 
+    else:
+        new_avatar = ChangeAvatarForm()
+        context['new_avatar'] = new_avatar
+        return render(request, 'user/user_info.html', context) 
 
 def change_nickname(request):
     redirect_to = request.GET.get('from', reverse('home'))

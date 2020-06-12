@@ -1,17 +1,17 @@
 import datetime
-from django.shortcuts import render, redirect
+from random import sample
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 from django.db.models import Sum,Q
 from django.core.cache import cache
 from django.urls import reverse
-from read_statistics.utils import get_seven_days_read_data, get_today_hot_data, get_yesterday_hot_data
-from blog.models import Blog
+from blog.models import Blog,BlogType
 from django.core.paginator import Paginator
-from django.core.mail import send_mail, send_mass_mail, EmailMultiAlternatives
- 
 from django.conf import settings
-
+from django.db.models import Count
+from read_statistics.utils import read_statistics_once_read
+from comment.models import Comment 
 
 def get_seven_days_hot_blogs():
     today = timezone.now().date()
@@ -20,18 +20,63 @@ def get_seven_days_hot_blogs():
                     .values('id','title','content') \
                     .annotate(read_num_sum=Sum('read_details__read_num')) \
                     .order_by('-read_num_sum')
-    return blogs
+    six_hot_blogs = []
+    for blog in blogs:
+        six_hot_blogs.append(blog)
+    return blogs[:5]
 
-def home(request):
-    blog_content_type = ContentType.objects.get_for_model(Blog) #接收一个模型类或模型的实例，并返回表示该模型的ContentType实例　
-    dates,read_nums = get_seven_days_read_data(blog_content_type)
+def random_blogs():
+    blogs = Blog.objects.all()
+    blogs = list(blogs)
+    return sample(blogs, 5)
+
+def get_blog_list_common_data(request,blogs_for_onepage):
+    paginator = Paginator(blogs_for_onepage,settings.EACH_PAGE_BLOGS_NUMBER) #  每N页进行分页
+    page_num = request.GET.get('page',1) #获取页码参数（GET请求）
+    page_of_blogs = paginator.get_page(page_num)
+    current_page_num = page_of_blogs.number #获取当前页码
+    #获取当前页码以及前两页和后两页
+    page_range = list(range(max(current_page_num - 2, 1), current_page_num)) + \
+               list(range(current_page_num,min(current_page_num +2 ,paginator.num_pages) + 1))
+    
+    #加上省略页码标记
+    if page_range[0] - 1 >=2:
+        page_range.insert(0,'...')
+    if paginator.num_pages - page_range[-1] >=2:
+        page_range.append('...')
+
+    #加上首页和尾页
+    if page_range[0] != 1:
+        page_range.insert(0,1)
+    if page_range[-1] != paginator.num_pages:
+        page_range.append(paginator.num_pages)  
+    
+    blog_dates = Blog.objects.dates('create_time','month',order='DESC')
+    blog_dates_dict = {}
+    for blog_date in blog_dates:
+        blog_count = Blog.objects.filter(create_time__year=blog_date.year,
+                                       create_time__month=blog_date.month).count()
+        blog_dates_dict[blog_date] = blog_count
 
     context = {}
-    context['dates'] = dates
-    context['read_nums'] = read_nums
-    context['today_hot_data'] = get_today_hot_data(blog_content_type)
-    context['yesterday_hot_data'] = get_yesterday_hot_data(blog_content_type)
-    context['hot_blogs_for_7_days'] = get_seven_days_hot_blogs()
+    context['page_of_blogs'] = page_of_blogs #获取的页
+    context['page_range'] = page_range #根据需求筛选出的要显示的滚动条对应具体的页码值列表
+    context['blog_dates'] = blog_dates_dict #日期                                         
+    return context
+
+def home(request):
+    coder_types = list(BlogType.objects.exclude(id=6).exclude(id=7).exclude(id=8).annotate(blogtype_count=Count('blog')))
+    blogs = Blog.objects.filter(status="p")
+    hot_blogs = get_seven_days_hot_blogs() 
+    randoms = random_blogs()
+    hot_comments = list(Comment.objects.all().order_by('-id'))
+    hot_comments = hot_comments[:5]
+    context = get_blog_list_common_data(request,blogs)
+    context['coder_types'] = coder_types
+    context['blogs'] = blogs
+    context['hot_blogs'] = hot_blogs
+    context['hot_comments'] = hot_comments
+    context['random_blogs'] = randoms
     return render(request,'home.html',context)
     
 def search(request):
@@ -61,6 +106,9 @@ def search(request):
     context['page_of_blogs'] = page_of_blogs
     context['return_back_url'] = redirect_to
     return render(request, 'search.html', context)
+
+# from django.core.mail import send_mail, send_mass_mail, EmailMultiAlternatives
+# from django.conf import settings
 
 def send_email(request):
     if request.method == 'POST':
