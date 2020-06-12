@@ -78,7 +78,7 @@
                             <div class="fathor">
                                 <div class="comment-inner">
                                     <div class="fathor-author">
-                                        <img src="{% static 'images/ll.jpg' %}" class="avatar" alt="">
+                                        <img src="/media/{{ user.get_avatar }}" class="avatar" alt="">
                                         <span>{{ comment.user.get_nickname_or_username }}</span>
                                     </div>    
                                     <div class="father-content" id="comment_{{ comment.pk }}">
@@ -95,7 +95,7 @@
                                 <div class="reply">
                                     <div class="comment-inner">
                                         <div class="reply-author">
-                                            <img src="{% static 'images/dog.jpg' %}" class="avatar" alt="">
+                                            <img src="/media/{{ user.get_avatar }}" class="avatar" alt="">
                                             <span>{{ reply.user.get_nickname_or_username }}</span>
                                             <span>回复</span>
                                             <span>{{ reply.reply_to.get_nickname_or_username }}：</span>

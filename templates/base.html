@@ -98,20 +98,23 @@
                   </a>
                 </div>
               {% else %}
-              <div class="dropdown" style="margin-right: 30px">
+              <div class="dropdown" style="margin-right: 40px">
                   <div class="dropdown-tigger">
                     <button class="info-button button" style="display: inline-flex;">
+                    {% if user.get_avatar %}
                       <img src="/media/{{ user.get_avatar }}" style="border-radius: 15%" alt="">
-                      <span class="icon is-small">
+                    {% else %}
+                      <span class="icon is-small">{{user.get_nickname_or_username}}
                       <i class="fa fa-angle-down" aria-hidden="true"></i>
                     </span>
+                    {% endif %}
                     </button>
                   </div>
                   <div class="dropdown-menu user-data">
                     <div class="dropdown-content">
                         <a class="navbar-item"  href="{% url 'user_info' %}?from={{ request.get_full_path }}"><i class="fa fa-grav" aria-hidden="true" style="margin-right: 5px"></i>个人信息</a>
                         {% if user.is_staff or user.is_superuser %}
-                        <a class="navbar-item" href="{% url 'admin:index' %}">后台管理</a>
+                        <a class="navbar-item" href="{% url 'admin:index' %}"><i class="fa fa-user-secret" aria-hidden="true" style="margin-right: 6px"></i>后台管理</a>
                         {% endif %}
                         <hr class="navbar-divider" >
                         <a class="navbar-item" href="{% url 'logout' %}?from={{ request.get_full_path }}"><i class="fa fa-times" aria-hidden="true" style="margin-right: 5px"></i>退出登录</a>
