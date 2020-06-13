@@ -111,13 +111,17 @@
                                 <li class="comment-listitem">
                                     <div class="comment-user">
                                         <span class="comment-avatar">
-                                            <img alt="" src="{% static 'images/p10.jpg' %}" class="avatar avatar-50 photo" height="50" width="50">
+                                            {% if comment.user.get_avatar %}
+                                            <img src="/media/{{ comment.user.get_avatar }}" class="avatar avatar-50 photo" height="45" width="45">
+                                            {% else %}
+                                            <img alt="" src="{% static 'images/dog.jpg' %}" class="avatar avatar-50 photo" height="45" width="45">
+                                            {% endif %}
                                         </span>
                                     <div class="comment-author" title="chz">{{comment.user.get_nickname_or_username}}</div>
                                         <span class="comment-date">{{comment.comment_time|date:"Y-m-d H:i:s"}}</span>
                                     </div>
                                     <div class="comment-content-link">
-                                        <a href="">
+                                        <a href="{% url 'blog_detail' comment.object_id %}">
                                             <div class="comment-content">
                                                 {{ comment.text|safe }}
                                             </div>

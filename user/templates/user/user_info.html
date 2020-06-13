@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="col-xs-9">
                                     {% if user.get_avatar %}
-                                        <img src="/media/{{ user.get_avatar }}" style="max-width: 10%; border-radius: 10%;">
+                                        <img src="/media/{{ user.get_avatar }}" style="width:45px;height: 45px;border-radius: 15%">
                                     {% else %}
                                         <h5>你还没有头像哦，请注意头像一旦上传不可修改~</h5>
                                         <form method="post" enctype="multipart/form-data" action="{% url 'user_info' %}" style="padding-left: 0;padding-top: 10px;margin-left: 0">

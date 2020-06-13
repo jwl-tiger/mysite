@@ -15,6 +15,10 @@
     <script src='{% static "bootstrap-3.3.7/js/bootstrap.min.js"  %}'></script>
     <link rel="stylesheet" href="{% static 'bulma.min.css' %}">
     {% block header_extends %}{% endblock %}
+    <style>
+      /*消除默认bulma样式*/
+      .navbar-item img {max-height: 50px!important} 
+    </style>
 </head>
 <body>
      <!--导航-->
@@ -98,14 +102,15 @@
                   </a>
                 </div>
               {% else %}
-              <div class="dropdown" style="margin-right: 40px">
+              <div class="dropdown" style="margin-right: 42px">
                   <div class="dropdown-tigger">
                     <button class="info-button button" style="display: inline-flex;">
                     {% if user.get_avatar %}
-                      <img src="/media/{{ user.get_avatar }}" style="border-radius: 15%" alt="">
+                      <img src="/media/{{ user.get_avatar }}" style="width:30px;height: 30px;border-radius: 15%" alt="">
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
                     {% else %}
                       <span class="icon is-small">{{user.get_nickname_or_username}}
-                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                      <i class="fa fa-angle-down" aria-hidden="true" style="padding-left:40px"></i>
                     </span>
                     {% endif %}
                     </button>
@@ -113,7 +118,7 @@
                   <div class="dropdown-menu user-data">
                     <div class="dropdown-content">
                         <a class="navbar-item"  href="{% url 'user_info' %}?from={{ request.get_full_path }}"><i class="fa fa-grav" aria-hidden="true" style="margin-right: 5px"></i>个人信息</a>
-                        {% if user.is_staff or user.is_superuser %}
+                        {% if user.is_staff and user.is_superuser %}
                         <a class="navbar-item" href="{% url 'admin:index' %}"><i class="fa fa-user-secret" aria-hidden="true" style="margin-right: 6px"></i>后台管理</a>
                         {% endif %}
                         <hr class="navbar-divider" >
